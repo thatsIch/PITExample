@@ -1,6 +1,19 @@
 plugins {
     id "java"
+
+    // generates coverage data
+    // see homepage: http://eclemma.org/jacoco/
+    // see plugin: https://docs.gradle.org/current/userguide/jacoco_plugin.html
+    id "jacoco"
+
+    // running mutating coverage tests
+    // see homepage: http://pitest.org/
+    // see plugin: http://gradle-pitest-plugin.solidsoft.info/
     id "info.solidsoft.pitest" version "1.1.4"
+
+    // used to publish the coverage data to coveralls
+    // see homepage: https://coveralls.io/
+    // see plugin: https://github.com/kt3k/coveralls-gradle-plugin/
     id "com.github.kt3k.coveralls" version "2.4.0"
 }
 
@@ -9,6 +22,13 @@ version = '1.0'
 
 repositories {
     mavenCentral()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
 }
 
 dependencies {
@@ -21,3 +41,7 @@ pitest {
     threads = 4
     outputFormats = ['HTML', 'XML']
 }
+//
+//coveralls {
+//    sourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs).files.absolutePath
+//}
