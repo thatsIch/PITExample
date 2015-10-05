@@ -21,6 +21,7 @@ test:
 
 # Only executed if all tasks are successful
 deployment:
+  # upload to bintray
   master:
     branch: master
     owner: circleci
@@ -29,6 +30,12 @@ deployment:
 
   # report coverage to coveralls
   coverage:
-    branch: [master]
+    branch: master
     commands:
     - ./gradlew jacocoTestReport coveralls
+
+  # update version eye badge
+  covereye:
+    branch: master
+    commands:
+    - ./gradlew versioneye-update
