@@ -8,3 +8,4 @@ Testing PIT in a toy project
 [![SemVer]](http://semver.org)
 [![Repo Size](https://reposs.herokuapp.com/?path=thatsIch/PITExample)](https://github.com/thatsIch/PITExample)
 [![Bintray](http://img.shields.io/badge/download-latest-bb00bb.svg)](https://bintray.com/thatsich/maven/PITExample/view)
+[![VersionEye](https://www.versioneye.com/user/projects/5612b666a193340015000231/badge.svg)](https://www.versioneye.com/user/projects/5612b666a193340015000231?child=summary)
