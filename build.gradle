@@ -40,6 +40,7 @@ pitest {
     targetClasses = ['de.thatsich.*']
     threads = 4
     outputFormats = ['HTML', 'XML']
+    mutators = ['ALL']
 }
 //
 //coveralls {
