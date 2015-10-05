@@ -16,6 +16,8 @@ dependencies {
 }
 
 pitest {
+    pitestVersion = '1.1.7'
+    targetClasses = ['de.thatsich.*']
     threads = 4
     outputFormats = ['HTML', 'XML']
 }
