@@ -10,3 +10,5 @@ Testing PIT in a toy project
 [![VersionEye](https://www.versioneye.com/user/projects/5612b666a193340015000231/badge.svg)](https://www.versioneye.com/user/projects/5612b666a193340015000231?child=summary)
 [![ReadTheDocs](https://readthedocs.org/projects/pit-example/badge/?version=latest)](http://pit-example.readthedocs.org/en/latest/)
 [![ReadTheDocs](https://readthedocs.org/projects/pit-example/badge/?version=stable)](http://pit-example.readthedocs.org/en/stable/)
+[![GitHub Tag](https://img.shields.io/github/tag/thatsIch/PITExample.svg)](https://github.com/thatsIch/PITExample/tags)
+[![GitHub Release](https://img.shields.io/github/release/thatsIch/PITExample.svg)](https://github.com/thatsIch/PITExample/releases)
