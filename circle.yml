@@ -24,7 +24,6 @@ deployment:
   # upload to bintray
   master:
     branch: master
-    owner: circleci
     commands:
     - ./gradlew bintrayUpload
 
