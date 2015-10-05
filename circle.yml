@@ -24,7 +24,8 @@ deployment:
   master:
     branch: master
     owner: circleci
-    commands: ./gradlew bintrayUpload
+    commands:
+    - ./gradlew bintrayUpload
 
   # report coverage to coveralls
   coverage:
