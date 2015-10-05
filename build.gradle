@@ -25,6 +25,11 @@ plugins {
     // see homepage: https://bintray.com
     // see plugin: https://github.com/bintray/gradle-bintray-plugin
     id "com.jfrog.bintray" version "1.3.1"
+
+    // prints pretty changelogs from git
+    // see homepage: https://git-scm.com/
+    // see plugin: https://github.com/selesse/gradle-git-changelog
+    id "com.selesse.git.changelog" version "0.1.2"
 }
 
 sourceCompatibility = 1.8
@@ -54,8 +59,8 @@ pitest {
 }
 
 bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
+    user = System.getenv('BINTRAY_USER') ?: "user"
+    key = System.getenv('BINTRAY_KEY') ?: "key"
     pkg {
         repo = 'maven'
         name = 'de.thatsich'
@@ -78,5 +83,57 @@ versioneye {
 
     // versioneye.api_key is required for the plugin to work.
     // Pass it over the system environmental variables
-    api_key = System.getenv('VERSION_EYE_KEY')
+    api_key = System.getenv('VERSION_EYE_KEY') ?: "key"
+}
+
+changelog {
+    // The title appears at the top of the changelog.
+    // Default value: the name of the project.
+    title = "${project.name} - Changelog"
+
+    // The output directory where the report is generated.
+    // Default value: main resource directory, or the "build" directory
+    outputDirectory = file("$projectDir")
+
+    // The name of the report to generate.
+    // Default value: CHANGELOG.md
+    fileName = "CHANGELOG.md"
+
+    // The range of commits the changelog should be composed of.
+    // Default value: 'beginning' (i.e. full changelog)
+    // Possible values: 'beginning', 'last_tag', 'xxx'
+    //
+    // 'last_tag' will use all the commits since the last tag,
+    // 'beginning' will use all commits since the initial commit (default)
+    // 'xxx' will use all the tags since the 'xxx' Git reference (i.e. `since = 1.2.0` will display the changelog
+    //       since the 1.2.0 tag, excluding 1.2.0)
+    since = 'beginning'
+
+    // The output formats that should be generated.
+    // Default value: ['markdown']
+    // Possible values: 'html', 'markdown'.
+    formats = ['markdown']
+
+    // The Git "pretty" changelog commit format.
+    // Default value: %ad%x09%s (%an), which produces:
+    // Thu May 7 20:10:33 2015 -0400    Initial commit (Alex Selesse)
+    commitFormat = '%s (%an)'
+
+    // A closure that returns 'true' if the line should be included in the changelog.
+    // Default value: accept everything, { true }
+    includeLines = {
+        !it.contains("Merge")
+    }
+
+    // A closure that transforms a changelog String.
+    // Default value: the identity closure, { it }
+    //
+    // For example, to remove '[ci skip]' from the changelog messages:
+    processLines = {
+        String input = it as String
+        if (input.contains('[ci skip] ')) {
+            input = input.minus('[ci skip] ')
+        }
+        input
+    }
 }
