@@ -16,5 +16,14 @@ test:
     - chmod +x gradlew
     - ./gradlew test
     - ./gradlew pitest
-  post:
-    - ./gradlew cobertura coveralls
+#  post:
+#    - ./gradlew cobertura coveralls
+
+# Only executed if all tasks are successful
+deployment:
+
+  # report coverage to coveralls
+  coverage:
+    branch: [master]
+    commands:
+    - ./gradlew coveralls
