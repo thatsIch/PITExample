@@ -38,4 +38,5 @@ deployment:
   covereye:
     branch: master
     commands:
-    - ./gradlew versioneye-update
+    # versioneye.api_key is required for the plugin to work.
+    - ./gradlew -Pversioneye.api_key=$VERSION_EYE_KEY versioneye-update

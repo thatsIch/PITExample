@@ -80,10 +80,6 @@ bintray {
 versioneye {
     // only declared dependencies are checked for updates
     dependencies = declared
-
-    // versioneye.api_key is required for the plugin to work.
-    // Pass it over the system environmental variables
-    api_key = System.getenv('VERSION_EYE_KEY') ?: "key"
 }
 
 changelog {
