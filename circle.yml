@@ -8,8 +8,11 @@ dependencies:
   override:
     - chmod +x gradlew
     - ./gradlew dependencies
+  cache_directories:
+    - "~/.gradle"
 
 test:
   override:
     - chmod +x gradlew
-    - ./gradlew clean assemble test pitest
+    - ./gradlew test
+    - ./gradlew pitest
