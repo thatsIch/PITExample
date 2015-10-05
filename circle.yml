@@ -16,3 +16,5 @@ test:
     - chmod +x gradlew
     - ./gradlew test
     - ./gradlew pitest
+  post:
+    - ./gradlew cobertura coveralls
