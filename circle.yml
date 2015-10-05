@@ -1,4 +1,15 @@
-test:
-    override:
+machine:
+  java:
+    version: oraclejdk8
+  timezone:
+    Europe/Berlin
+
+dependencies:
+  override:
     - chmod +x gradlew
-    - ./gradlew assemble test pitest
+    - ./gradlew dependencies
+
+test:
+  override:
+    - chmod +x gradlew
+    - ./gradlew clean assemble test pitest
