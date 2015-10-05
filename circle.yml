@@ -21,6 +21,10 @@ test:
 
 # Only executed if all tasks are successful
 deployment:
+  master:
+    branch: master
+    owner: circleci
+    commands: ./gradlew bintrayUpload
 
   # report coverage to coveralls
   coverage:
