@@ -1,0 +1,4 @@
+test:
+    override:
+    - chmod +x gradlew
+    - ./gradlew assemble test pitest
