@@ -15,6 +15,11 @@ plugins {
     // see homepage: https://coveralls.io/
     // see plugin: https://github.com/kt3k/coveralls-gradle-plugin/
     id "com.github.kt3k.coveralls" version "2.4.0"
+
+    // tracks dependency status
+    // see homepage: https://www.versioneye.com/
+    // see plugin: https://github.com/stempler/gradle-versioneye-plugin
+    id "org.standardout.versioneye" version "1.0.1"
 }
 
 sourceCompatibility = 1.8
