@@ -1,12 +1,9 @@
 plugins {
+    id "java"
     id "info.solidsoft.pitest" version "1.1.4"
     id 'net.saliman.cobertura' version '2.2.7'
     id "com.github.kt3k.coveralls" version "2.4.0"
 }
-
-apply plugin: 'java'
-apply plugin: 'cobertura'
-apply plugin: 'com.github.kt3k.coveralls'
 
 sourceCompatibility = 1.8
 version = '1.0'
