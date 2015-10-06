@@ -23,7 +23,6 @@ dependencies:
 # running your tests
 test:
   override:
-    - chmod +x gradlew
     - ./gradlew test
     - ./gradlew pitest
 #  post:
