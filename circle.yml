@@ -19,8 +19,8 @@ machine:
 dependencies:
   override:
     - chmod +x gradlew
-    - ./gradlew dependencies
-    - ./gradlew clean
+#    - ./gradlew dependencies
+#    - ./gradlew clean
 
   cache_directories:
     - "~/.gradle"
