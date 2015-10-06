@@ -1,3 +1,5 @@
+import java.util.regex.Matcher
+
 plugins {
     id "java"
 
@@ -30,6 +32,11 @@ plugins {
     // see homepage: https://git-scm.com/
     // see plugin: https://github.com/selesse/gradle-git-changelog
     id "com.selesse.git.changelog" version "0.1.2"
+
+    // handles publishing to github and versioning
+    // see homepage:  https://github.com
+    // see plugin: https://github.com/researchgate/gradle-release
+    id 'net.researchgate.release' version '2.2.2'
 }
 
 group "de.thatsich"
@@ -156,5 +163,43 @@ changelog {
             input = input.minus('[ci skip] ')
         }
         input
+    }
+}
+
+release {
+    failOnCommitNeeded = true
+    failOnPublishNeeded = true
+    failOnSnapshotDependencies = true
+    failOnUnversionedFiles = true
+    failOnUpdateNeeded = true
+    revertOnFail = true
+    preCommitText = ''
+    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
+    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
+    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
+    tagTemplate = '${version}'
+    versionPropertyFile = 'gradle.properties'
+    versionProperties = []
+    buildTasks = ['build']
+    versionPatterns = [
+            /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1] as int) + 1}${m[0][2]}") }
+    ]
+    scmAdapters = [
+            net.researchgate.release.GitAdapter,
+            net.researchgate.release.SvnAdapter,
+            net.researchgate.release.HgAdapter,
+            net.researchgate.release.BzrAdapter
+    ]
+
+    git {
+        // releases must be done off release or production branch
+        requireBranch = '/release|production/'
+        pushToRemote = 'origin'
+        pushToCurrentBranch = false
+    }
+
+    svn {
+        username = null
+        password = null
     }
 }
