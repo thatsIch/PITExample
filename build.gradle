@@ -181,7 +181,9 @@ github {
     tagName = "${project.version}"
     targetCommitish = 'master'
     name = "v${project.version}"
-    body = new File('resources/main/CHANGELOG.md').getText('UTF-8')
+//    body = new File('resources/main/CHANGELOG.md').getText('UTF-8')
+    body = this.changeLog
+    prerelease = this.isPreRelease()
     assets = [
             "build/libs/${project.name}-${project.version}",
             "build/libs/${project.name}-${project.version}-javadoc",
@@ -193,5 +195,30 @@ github {
 }
 githubRelease.dependsOn generateChangelog
 
-def currentBranchCommand = "git rev-parse --abbrev-ref HEAD"
-def currentBranch = currentBranchCommand.execute()
+def String getChangeLog() {
+    return new File('build/resources/main/CHANGELOG.md').getText('UTF-8')
+}
+
+task printChangeLog(group: 'Debug', description: 'Returns the changelog.') << {
+    println this.changeLog
+}
+
+def String getCurrentBranch() {
+    def currentBranchCommand = "git rev-parse --abbrev-ref HEAD"
+    def currentBranch = currentBranchCommand.execute()
+    def currentBranchAsText = currentBranch.text.trim()
+
+    return currentBranchAsText
+}
+
+task printCurrentBranch(group: 'Debug', description: 'Returns the current branch.') << {
+    println this.currentBranch
+}
+
+def isPreRelease() {
+    return this.currentBranch == 'release'
+}
+
+task printIsPreRelease(group: 'Debug', description: 'Returns if the current version is a pre-release.') << {
+    println this.isPreRelease
+}
