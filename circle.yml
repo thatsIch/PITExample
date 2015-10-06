@@ -32,7 +32,7 @@ test:
 # deploying your code to your web servers
 # Only executed if all tasks are successful
 deployment:
-  changelog:
+  ghchangelog:
     branch: master
     commands:
       # publish changelog to gh-pages so it can be hosted there
