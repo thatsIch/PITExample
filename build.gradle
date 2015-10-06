@@ -1,4 +1,12 @@
-import java.util.regex.Matcher
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'co.riiid:gradle-github-plugin:0.3.1'
+    }
+}
 
 plugins {
     id "java"
@@ -32,17 +40,17 @@ plugins {
     // see homepage: https://git-scm.com/
     // see plugin: https://github.com/selesse/gradle-git-changelog
     id "com.selesse.git.changelog" version "0.1.2"
-
-    // can create github release notes
-    // see homepage:  https://github.com
-    // see plugin: https://github.com/riiid/gradle-github-plugin
-    id 'co.riiid.gradle' version '0.3.1'
 }
+
+// can create github release notes
+// see homepage:  https://github.com
+// see plugin: https://github.com/riiid/gradle-github-plugin
+apply plugin: 'co.riiid.gradle'
 
 group "de.thatsich"
 description 'Example project to test PIT with several other plugins'
 sourceCompatibility = 1.8
-version '1.0'
+version '0.0.2'
 
 repositories {
     mavenCentral()
@@ -73,7 +81,7 @@ artifacts {
 jacocoTestReport {
     reports {
         xml.enabled = true // coveralls plugin depends on xml format report
-        html.enabled = true
+        html.enabled = false
     }
 }
 
@@ -99,10 +107,10 @@ bintray {
         licenses = ['MIT']
         vcsUrl = 'https://github.com/thatsIch/PITExample.git'
         version {
-            name = '0.1.0'
+            name = "v${project.version}"
             desc = 'Project with various plugins'
             released = new Date()
-            vcsTag = '0.1.0'
+            vcsTag = "${project.version}"
             attributes = ['testattribute': 'some attribute']
         }
     }
@@ -140,7 +148,7 @@ changelog {
     // The output formats that should be generated.
     // Default value: ['markdown']
     // Possible values: 'html', 'markdown'.
-    formats = ['markdown']
+    formats = ['markdown', 'html']
 
     // The Git "pretty" changelog commit format.
     // Default value: %ad%x09%s (%an), which produces:
@@ -167,19 +175,23 @@ changelog {
 }
 
 github {
-    owner = 'riiid'
-    repo = 'gradle-github-plugin'
-    token = 'XXXXXXXXXXXXXXXXXXXXX'
-    tagName = '0.1.0'
+    owner = 'thatsich'
+    repo = "${project.name}"
+    token = System.getenv('GITHUB_PLUGIN_KEY') ?: "GITHUB_PLUGIN_KEY"
+    tagName = "${project.version}"
     targetCommitish = 'master'
-    name = 'v0.1.0'
-    body = """# Project Name
-Write `release note` here.
-"""
+    name = "v${project.version}"
+    body = new File('resources/main/CHANGELOG.md').getText('UTF-8')
     assets = [
-            'app/build/outputs/apk/app-release.apk',
-            'app/build/outputs/mapping/release/mapping.txt',
-            'app/build/outputs',
-            ...
+            "build/libs/${project.name}-${project.version}",
+            "build/libs/${project.name}-${project.version}-javadoc",
+            "build/libs/${project.name}-${project.version}-sources",
+            'build/reports/pitest',
+            'build/reports/tests',
+            'resources/main/CHANGELOG.md'
     ]
 }
+githubRelease.dependsOn generateChangelog
+
+def currentBranchCommand = "git rev-parse --abbrev-ref HEAD"
+def currentBranch = currentBranchCommand.execute()
