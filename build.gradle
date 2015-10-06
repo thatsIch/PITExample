@@ -33,10 +33,10 @@ plugins {
     // see plugin: https://github.com/selesse/gradle-git-changelog
     id "com.selesse.git.changelog" version "0.1.2"
 
-    // handles publishing to github and versioning
+    // can create github release notes
     // see homepage:  https://github.com
-    // see plugin: https://github.com/researchgate/gradle-release
-    id 'net.researchgate.release' version '2.2.2'
+    // see plugin: https://github.com/riiid/gradle-github-plugin
+    id 'co.riiid.gradle' version '0.3.1'
 }
 
 group "de.thatsich"
@@ -166,37 +166,20 @@ changelog {
     }
 }
 
-release {
-    failOnCommitNeeded = true
-    failOnPublishNeeded = true
-    failOnSnapshotDependencies = true
-    failOnUnversionedFiles = true
-    failOnUpdateNeeded = true
-    revertOnFail = true
-    preCommitText = ''
-    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
-    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
-    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
-    tagTemplate = '${version}'
-    versionPropertyFile = 'gradle.properties'
-    versionProperties = []
-    buildTasks = ['build']
-    versionPatterns = [
-            /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1] as int) + 1}${m[0][2]}") }
+github {
+    owner = 'riiid'
+    repo = 'gradle-github-plugin'
+    token = 'XXXXXXXXXXXXXXXXXXXXX'
+    tagName = '0.1.0'
+    targetCommitish = 'master'
+    name = 'v0.1.0'
+    body = """# Project Name
+Write `release note` here.
+"""
+    assets = [
+            'app/build/outputs/apk/app-release.apk',
+            'app/build/outputs/mapping/release/mapping.txt',
+            'app/build/outputs',
+            ...
     ]
-    scmAdapters = [
-            net.researchgate.release.GitAdapter
-    ]
-
-    git {
-        // releases must be done off release or production branch
-        requireBranch = '(develop|release|production)'
-        pushToRemote = 'origin'
-        pushToCurrentBranch = true
-    }
-
-    svn {
-        username = null
-        password = null
-    }
 }
