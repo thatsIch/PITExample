@@ -5,6 +5,10 @@ general:
     - "build/resources/main/CHANGELOG.md"
     - "build/libs"
 
+  branches:
+    ignore:
+      - gh-pages # list of branches to ignore
+
 #adjusting the VM to your preferences and requirements
 machine:
   java:
@@ -31,13 +35,9 @@ test:
 # deploying your code to your web servers
 # Only executed if all tasks are successful
 deployment:
-  ghchangelog:
-    branch: master
-    commands:
-      # publish changelog to gh-pages so it can be hosted there
-      - ./gradlew generateChangelog
-  javadoc:
-    branch: master
+  # just a label. Label names are up to you
+  production:
+    branch: production
     commands:
       # publish javadoc to gh-pages so it can be hosted there
       - ./gradlew javadoc
@@ -49,19 +49,35 @@ deployment:
       - git add .
       - git commit -m "[ci skip] Generate Javadoc"
       - git push origin gh-pages
-  # upload to bintray
-  master:
-    branch: master
-    commands:
+
+      # publish changelog to gh-pages so it can be hosted there
+      - ./gradlew generateChangelog
+
+      # upload to bintray
       - ./gradlew bintrayUpload
-  # report coverage to coveralls
-  coverage:
-    branch: master
-    commands:
-     - ./gradlew jacocoTestReport coveralls
-  # update version eye badge
-  covereye:
-    branch: master
-    commands:
+
+      # report coverage to coveralls
+      - ./gradlew jacocoTestReport coveralls
+
+      # update version eye badge
       # versioneye.api_key is required for the plugin to work.
       - ./gradlew -Pversioneye.api_key=$VERSION_EYE_KEY versioneye-update
+
+#  release:
+#    branch: release
+#    commands:
+      # publish github pre-release
+      # publish github tag
+#      -
+
+#  develop:
+#    branch: develop
+#    commands:
+      # publish github tag
+#      -
+
+#  pullrequest:
+#    branch: /.*/
+#    commands:
+#      # just build?
+#      -
