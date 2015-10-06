@@ -63,6 +63,7 @@ pitest {
 bintray {
     user = System.getenv('BINTRAY_USER') ?: "user"
     key = System.getenv('BINTRAY_KEY') ?: "key"
+    dryRun = true
     pkg {
         repo = 'maven'
         name = 'PITExample'
