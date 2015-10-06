@@ -9,8 +9,7 @@ general:
 machine:
   java:
     version: oraclejdk8
-  timezone:
-    Europe/Berlin
+  timezone: Europe/Berlin
 
 # setting up your project's language-specific dependencies
 dependencies:
