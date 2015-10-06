@@ -193,7 +193,7 @@ release {
 
     git {
         // releases must be done off release or production branch
-        requireBranch = "(release|production)"
+        requireBranch = '(release|production)'
         pushToRemote = 'origin'
         pushToCurrentBranch = false
     }
