@@ -18,6 +18,12 @@ public class TimeLineTest
 	}
 
 	@Test
+	public void validateInitialFetchCount()
+	{
+		assertEquals( TimeLine.DEFAULT_FETCH_COUNT, this.timeline.getFetchCount() );
+	}
+
+	@Test
 	public void setFetchCount()
 	{
 		int expected = 5;
