@@ -20,6 +20,8 @@ dependencies:
   override:
     - chmod +x gradlew
     - ./gradlew dependencies
+    - ./gradlew clean
+
   cache_directories:
     - "~/.gradle"
     - ".gradle"
@@ -73,6 +75,11 @@ deployment:
 #  develop:
 #    branch: develop
 #    commands:
+      # generate changelog as artifact
+#      - ./gradlew generateChangelog
+
+
+
       # publish github tag
 #      -
 
