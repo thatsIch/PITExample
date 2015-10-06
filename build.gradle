@@ -195,7 +195,7 @@ release {
         // releases must be done off release or production branch
         requireBranch = '(develop|release|production)'
         pushToRemote = 'origin'
-        pushToCurrentBranch = false
+        pushToCurrentBranch = true
     }
 
     svn {
