@@ -32,13 +32,11 @@ test:
 # deploying your code to your web servers
 # Only executed if all tasks are successful
 deployment:
-
   changelog:
     branch: master
     commands:
       # publish changelog to gh-pages so it can be hosted there
       - ./gradlew generateChangelog
-
   javadoc:
     branch: master
     commands:
@@ -52,19 +50,16 @@ deployment:
       - git add .
       - git commit -m "[ci skip] Generate Javadoc"
       - git push origin gh-pages
-
   # upload to bintray
   master:
     branch: master
     commands:
       - ./gradlew bintrayUpload
-
   # report coverage to coveralls
   coverage:
     branch: master
     commands:
      - ./gradlew jacocoTestReport coveralls
-
   # update version eye badge
   covereye:
     branch: master
