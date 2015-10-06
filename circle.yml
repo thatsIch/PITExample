@@ -31,8 +31,11 @@ test:
   override:
     - ./gradlew test
     - ./gradlew pitest
-#  post:
+  post:
+    # after all tests build the jars
+    - ./gradlew build
 #    - cp build/tests/*.xml $CIRCLE_TEST_REPORTS
+
 
 # deploying your code to your web servers
 # Only executed if all tasks are successful
