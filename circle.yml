@@ -1,6 +1,7 @@
 general:
   artifacts:
     - "build/reports"
+    - "build/resources/main/CHANGELOG.md"
 
 machine:
   java:
