@@ -1,31 +1,59 @@
+# general build-related configurations that are not related to a specific phase,
 general:
   artifacts:
     - "build/reports"
     - "build/resources/main/CHANGELOG.md"
+    - "build/libs"
 
+#adjusting the VM to your preferences and requirements
 machine:
   java:
     version: oraclejdk8
   timezone:
     Europe/Berlin
 
+# setting up your project's language-specific dependencies
 dependencies:
   override:
     - chmod +x gradlew
     - ./gradlew dependencies
   cache_directories:
     - "~/.gradle"
+    - ".gradle"
 
+# running your tests
 test:
   override:
     - chmod +x gradlew
     - ./gradlew test
     - ./gradlew pitest
 #  post:
-#    - ./gradlew cobertura coveralls
+#    - cp build/tests/*.xml $CIRCLE_TEST_REPORTS
 
+# deploying your code to your web servers
 # Only executed if all tasks are successful
 deployment:
+
+  changelog:
+    branch: master
+    commands:
+    # publish changelog to gh-pages so it can be hosted there
+    - ./gradlew generateChangelog
+
+  javadoc:
+    branch: master
+    commands:
+    # publish javadoc to gh-pages so it can be hosted there
+    - ./gradlew javadoc
+    - git config user.name "Circle CI"
+    - git config user.email "robot+circleci@thatsich.de"
+    - git checkout gh-pages
+    - rm -rf com resources
+    - mv build/docs/javadoc/* .
+    - git add .
+    - git commit -m "[ci skip] Generate Javadoc"
+    - git push origin gh-pages
+
   # upload to bintray
   master:
     branch: master

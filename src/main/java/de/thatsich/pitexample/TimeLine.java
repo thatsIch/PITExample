@@ -1,6 +1,11 @@
 package de.thatsich.pitexample;
 
 
+/**
+ * Test Javadoc
+ *
+ * @author thatsIch
+ */
 public class TimeLine
 {
 	static final int DEFAULT_FETCH_COUNT = 10;
