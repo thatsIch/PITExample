@@ -19,6 +19,8 @@ machine:
 dependencies:
   override:
     - chmod +x gradlew
+    # publish changelog to gh-pages so it can be hosted there
+    - ./gradlew generateChangelog
 #    - ./gradlew dependencies
 #    - ./gradlew clean
 
@@ -54,9 +56,6 @@ deployment:
       - git add .
       - git commit -m "[ci skip] Generate Javadoc"
       - git push origin gh-pages
-
-      # publish changelog to gh-pages so it can be hosted there
-      - ./gradlew generateChangelog
 
       # upload to bintray
       - ./gradlew bintrayUpload
