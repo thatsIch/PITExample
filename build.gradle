@@ -65,7 +65,7 @@ bintray {
     key = System.getenv('BINTRAY_KEY') ?: "key"
     pkg {
         repo = 'maven'
-        name = 'de.thatsich'
+        name = 'PITExample'
         licenses = ['MIT']
         vcsUrl = 'https://github.com/thatsIch/PITExample.git'
         version {
