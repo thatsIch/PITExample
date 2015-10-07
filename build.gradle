@@ -5,6 +5,7 @@ buildscript {
 
     dependencies {
         classpath 'co.riiid:gradle-github-plugin:0.3.1'
+        classpath 'com.palantir:jacoco-coverage:0.3.0'
     }
 }
 
@@ -47,6 +48,10 @@ plugins {
 // see plugin: https://github.com/riiid/gradle-github-plugin
 apply plugin: 'co.riiid.gradle'
 
+// evaluates jacoco coverage
+// see plugin: https://github.com/palantir/gradle-jacoco-coverage
+apply plugin: 'com.palantir.jacoco-coverage'
+
 group "de.thatsich"
 description 'Example project to test PIT with several other plugins'
 sourceCompatibility = 1.8
@@ -83,6 +88,12 @@ jacocoTestReport {
         xml.enabled = true // coveralls plugin depends on xml format report
         html.enabled = false
     }
+}
+
+jacocoCoverage {
+    // Enforce minimum code coverage of 50% for every Java file.
+    // Value differs from branch. Release will have a much higher threshold than develop
+    fileThreshold 0.5
 }
 
 dependencies {
@@ -222,3 +233,5 @@ def isPreRelease() {
 task printIsPreRelease(group: 'Debug', description: 'Returns if the current version is a pre-release.') << {
     println this.isPreRelease
 }
+
+apply from: 'gradle/scripts/versioning.gradle'

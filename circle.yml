@@ -19,10 +19,9 @@ machine:
 dependencies:
   override:
     - chmod +x gradlew
+
     # publish changelog to gh-pages so it can be hosted there
     - ./gradlew generateChangelog
-#    - ./gradlew dependencies
-#    - ./gradlew clean
 
   cache_directories:
     - "~/.gradle"

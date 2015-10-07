@@ -1,0 +1,165 @@
+ext.projectversion = readVersion()
+
+/**
+ * Class for project version.
+ * Contains major minor revision and commit count.
+ * Offers 3 methods to increase major, minor and revision,
+ * commit count will be determined dynamically
+ * and can only be set upon construction
+ */
+class ProjectVersion {
+    private Integer major
+    private Integer minor
+    private Integer patch
+    private String label
+    private String meta
+
+    // Constructor
+    ProjectVersion(Integer major, Integer minor, Integer patch, String label, String meta) {
+        this.major = major
+        this.minor = minor
+        this.patch = patch
+        this.label = label
+        this.meta = meta
+    }
+
+    @Override
+    String toString() {
+        "$major.$minor.$patch-$label+$meta"
+    }
+
+    public ProjectVersion incMajor() {
+        ++this.major
+        this.minor = 0
+        this.patch = 0
+
+        return this
+    }
+
+    public ProjectVersion incMinor() {
+        ++this.minor
+        this.revision = 0
+
+        return this
+    }
+
+    public ProjectVersion incPatch() {
+        ++this.patch
+
+        return this
+    }
+}
+/**
+ * Pulls the version information from git
+ *
+ * @return project version
+ */
+private ProjectVersion readVersion() {
+
+    // call git command.
+    def outStream = new ByteArrayOutputStream()
+    def projectVersion = new ProjectVersion(0, 0, 0, "pre.0", "build.0")
+
+    try {
+        exec {
+            executable = 'git'
+            args = ['describe', '--tags', "HEAD"]
+            standardOutput = outStream
+        }
+
+        def fullVersion = outStream.toString().trim()
+        def matcher = fullVersion =~ /(\d+).(\d+).(\d+)-(\s+)+(\s+)/
+        def match = matcher[0]
+
+        Integer major = match[1].toInteger()
+        Integer minor = match[2].toInteger()
+        Integer patch = match[3].toInteger()
+        Integer commit = gitCommitCount
+
+        projectVersion = new ProjectVersion(major, minor, revision, commit)
+    }
+    catch (ignored) {
+        tag("/dev/null", "0.0.0.0")
+    }
+
+    return projectVersion
+}
+
+/**
+ * gets the count of commits on the repository
+ *
+ * @return count of commits
+ */
+private Integer getGitCommitCount() {
+
+    // call git command.
+    def outStream = new ByteArrayOutputStream()
+    try {
+        exec {
+            executable = 'git'
+            args = ['rev-list', 'HEAD', "--count"]
+            standardOutput = outStream
+        }
+
+        def fullVersion = outStream.toString().trim()
+        def matcher = fullVersion =~ /(\d+)/
+
+        return matcher[0][1].toInteger()
+    }
+    catch (exception) {
+        logger.warn "Can't get commit count: $exception"
+        return 0
+    }
+}
+
+/**
+ * Creates a new tag with old and new tag message
+ *
+ * @param oldTag old tag
+ * @param newTag new tag
+ */
+private void tag(String oldTag, String newTag) {
+    String message = "Incrementing project version: $oldTag -> $newTag"
+    logger.quiet message
+
+    exec {
+        executable = 'git'
+        args = ['tag', '-a', "v$newTag", "-m", message]
+    }
+}
+
+/**
+ * Pushes all outstanding commits
+ */
+private void push() {
+    // call git command.
+    exec {
+        executable = 'git'
+        args = ['push', '--follow-tags']
+    }
+}
+
+task incMajor(group: 'versioning', description: 'Increments project major project.ext.version.') << {
+    String oldTag = projectversion.toString()
+    String newTag = projectversion.incMajor().toString()
+
+    tag(oldTag, newTag)
+}
+
+task incMinor(group: 'versioning', description: 'Increments project minor project.ext.version.') << {
+    String oldTag = projectversion.toString()
+    String newTag = projectversion.incMinor().toString()
+
+    tag(oldTag, newTag)
+}
+
+task incRev(group: 'versioning', description: 'Increments project reproject.ext.version.') << {
+    String oldTag = projectversion.toString()
+    String newTag = projectversion.incRevision().toString()
+
+    tag(oldTag, newTag)
+}
+
+task pushToCurse(group: 'versioning', description: 'Pushes all outstanding commits to remote', dependsOn: 'curse') << {
+    push()
+}
