@@ -52,11 +52,14 @@ apply plugin: 'co.riiid.gradle'
 // see plugin: https://github.com/palantir/gradle-jacoco-coverage
 apply plugin: 'com.palantir.jacoco-coverage'
 
+// import ext.projectversion
+apply from: 'gradle/scripts/versioning.gradle'
+
 group "de.thatsich"
 description 'Example project to test PIT with several other plugins'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-version '0.0.2'
+version ext.projectversion
 
 repositories {
     mavenCentral()
@@ -249,5 +252,3 @@ def isPreRelease() {
 task printIsPreRelease(group: 'Debug', description: 'Returns if the current version is a pre-release.') << {
     println this.isPreRelease
 }
-
-apply from: 'gradle/scripts/versioning.gradle'

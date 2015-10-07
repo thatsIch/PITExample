@@ -1,11 +1,12 @@
 package de.thatsich.pitexample;
 
 
-/**
- * Created by thatsIch on 07.10.2015.
- */
 public final class Preconditions
 {
+	private Preconditions() {
+
+	}
+
 	public static <T> T requireNotNull( T input )
 	{
 		if( input == null )

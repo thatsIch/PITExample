@@ -25,8 +25,8 @@ public final class SemVer
 	public String toString()
 	{
 		final String main = this.major + "." + this.minor + "." + this.patch;
-		final String withLabel = main + ( this.maybeLabel.isPresent() ? "" : "-" + this.maybeLabel.get() );
-		final String withMeta = withLabel + ( this.maybeMeta.isPresent() ? "" : "+" + this.maybeMeta.get() );
+		final String withLabel = main + ( this.maybeLabel.isPresent() ? "-" + this.maybeLabel.get() : "" );
+		final String withMeta = withLabel + ( this.maybeMeta.isPresent() ? "+" + this.maybeMeta.get() : "" );
 
 		return withMeta;
 	}
@@ -100,5 +100,49 @@ public final class SemVer
 
 			return new SemVer( this.major, this.minor, this.patch, label, meta );
 		}
+	}
+
+	@Override
+	public boolean equals( Object o )
+	{
+		if( this == o )
+		{
+			return true;
+		}
+		if( o == null || getClass() != o.getClass() )
+		{
+			return false;
+		}
+
+		final SemVer semVer = (SemVer) o;
+
+		if( major != semVer.major )
+		{
+			return false;
+		}
+		if( minor != semVer.minor )
+		{
+			return false;
+		}
+		if( patch != semVer.patch )
+		{
+			return false;
+		}
+		if( !maybeLabel.equals( semVer.maybeLabel ) )
+		{
+			return false;
+		}
+		return maybeMeta.equals( semVer.maybeMeta );
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int result = major;
+		result = 31 * result + minor;
+		result = 31 * result + patch;
+		result = 31 * result + maybeLabel.hashCode();
+		result = 31 * result + maybeMeta.hashCode();
+		return result;
 	}
 }

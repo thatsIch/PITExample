@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 
-public class TimeLineTest
+public final class TimeLineTest
 {
 	private TimeLine timeline;
 
