@@ -94,7 +94,22 @@ jacocoTestReport {
 jacocoCoverage {
     // Enforce minimum code coverage of 50% for every Java file.
     // Value differs from branch. Release will have a much higher threshold than develop
-    fileThreshold 0.5
+    switch( currentBranch) {
+        case "develop":
+            fileThreshold 0.3
+            break;
+
+        case "release":
+            fileThreshold 0.5
+            break;
+
+        case "production":
+            fileThreshold 0.7
+            break;
+
+        default:
+            break;
+    }
 }
 
 dependencies {
