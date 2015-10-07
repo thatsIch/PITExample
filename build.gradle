@@ -55,6 +55,7 @@ apply plugin: 'com.palantir.jacoco-coverage'
 group "de.thatsich"
 description 'Example project to test PIT with several other plugins'
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 version '0.0.2'
 
 repositories {
