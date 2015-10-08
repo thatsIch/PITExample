@@ -3,11 +3,7 @@ package de.thatsich.pitexample;
 
 public final class Preconditions
 {
-	private Preconditions() {
-
-	}
-
-	public static <T> T requireNotNull( T input )
+	public <T> T requireNotNull( T input )
 	{
 		if( input == null )
 		{
@@ -17,7 +13,7 @@ public final class Preconditions
 		return input;
 	}
 
-	public static void requireCondition( boolean condition )
+	public void requireCondition( boolean condition )
 	{
 		if( !condition )
 		{

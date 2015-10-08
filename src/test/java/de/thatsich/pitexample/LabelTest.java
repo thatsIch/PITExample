@@ -17,6 +17,21 @@ public final class LabelTest
 		label = new Label("pre", 0);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullLabel() {
+		new Label( null, 0 );
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNegativeLabel() {
+		new Label( "build", -1 );
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testEmptyLabel() {
+		new Label( "", 0 );
+	}
+
 	@Test
 	public void testGetLabel() throws Exception
 	{
@@ -40,6 +55,14 @@ public final class LabelTest
 	{
 		final String expected = "pre.0";
 		final String actual = this.label.toString();
+
+		assertEquals( expected, actual );
+	}
+
+	@Test
+	public void testNonStandardLabelVersion() {
+		final int expected = 15;
+		final int actual = new Label( "label", expected ).getVersion();
 
 		assertEquals( expected, actual );
 	}

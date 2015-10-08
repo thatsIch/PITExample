@@ -1,6 +1,7 @@
 package de.thatsich.pitexample;
 
 
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -9,16 +10,23 @@ import org.junit.Test;
  */
 public class PreconditionsTest
 {
+	private Preconditions preconditions;
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testRequireNotNull() throws Exception
+	@Before
+	public void setUp()
 	{
-		Preconditions.requireNotNull( null );
+		this.preconditions = new Preconditions();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test( expected = IllegalArgumentException.class )
+	public void testRequireNotNull() throws Exception
+	{
+		this.preconditions.requireNotNull( null );
+	}
+
+	@Test( expected = IllegalArgumentException.class )
 	public void testRequireCondition() throws Exception
 	{
-		Preconditions.requireCondition( false );
+		this.preconditions.requireCondition( false );
 	}
 }

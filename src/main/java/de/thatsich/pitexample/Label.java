@@ -3,16 +3,18 @@ package de.thatsich.pitexample;
 
 public class Label
 {
+	private static final Preconditions PRECONDITIONS = new Preconditions();
+
 	private final String label;
 	private final int version;
 
 	public Label( final String label, final int version )
 	{
-		this.label = Preconditions.requireNotNull( label );
-		Preconditions.requireCondition( !label.isEmpty() );
+		this.label = PRECONDITIONS.requireNotNull( label );
+		PRECONDITIONS.requireCondition( !label.isEmpty() );
 
 		this.version = version;
-		Preconditions.requireCondition( version >= 0 );
+		PRECONDITIONS.requireCondition( version >= 0 );
 	}
 
 	public String getLabel()

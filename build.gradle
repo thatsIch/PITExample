@@ -4,7 +4,6 @@ buildscript {
     }
 
     dependencies {
-        classpath 'co.riiid:gradle-github-plugin:0.3.1'
         classpath 'com.palantir:jacoco-coverage:0.3.0'
     }
 }
@@ -41,12 +40,12 @@ plugins {
     // see homepage: https://git-scm.com/
     // see plugin: https://github.com/selesse/gradle-git-changelog
     id "com.selesse.git.changelog" version "0.1.2"
-}
 
-// can create github release notes
+    // can create github release notes
 // see homepage:  https://github.com
 // see plugin: https://github.com/riiid/gradle-github-plugin
-apply plugin: 'co.riiid.gradle'
+    id "co.riiid.gradle" version "0.3.1"
+}
 
 // evaluates jacoco coverage
 // see plugin: https://github.com/palantir/gradle-jacoco-coverage
@@ -121,9 +120,10 @@ dependencies {
 
 pitest {
     pitestVersion = '1.1.7'
+    reportDir = "build/reports/pitest"
     targetClasses = ['de.thatsich.*']
     threads = 4
-    outputFormats = ['HTML', 'XML']
+    outputFormats = ['HTML']
     mutators = ['ALL']
 }
 

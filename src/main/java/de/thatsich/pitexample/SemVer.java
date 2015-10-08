@@ -21,85 +21,45 @@ public final class SemVer
 		this.maybeMeta = maybeMeta;
 	}
 
-	@Override
-	public String toString()
-	{
-		final String main = this.major + "." + this.minor + "." + this.patch;
-		final String withLabel = main + ( this.maybeLabel.isPresent() ? "-" + this.maybeLabel.get() : "" );
-		final String withMeta = withLabel + ( this.maybeMeta.isPresent() ? "+" + this.maybeMeta.get() : "" );
-
-		return withMeta;
-	}
-
 	public static SemVerBuilder builder()
 	{
 		return new SemVerBuilder();
 	}
 
-	public static final class SemVerBuilder
+	public int major()
 	{
-		private static final int DEFAULT_MAJOR = 0;
-		private static final int DEFAULT_MINOR = 0;
-		private static final int DEFAULT_PATCH = 0;
-		private static final Label DEFAULT_LABEL = null;
-		private static final BuildMeta DEFAULT_META = null;
+		return major;
+	}
 
-		private int major = DEFAULT_MAJOR;
-		private int minor = DEFAULT_MINOR;
-		private int patch = DEFAULT_PATCH;
-		private Label label = DEFAULT_LABEL;
-		private BuildMeta meta = DEFAULT_META;
+	public int minor()
+	{
+		return minor;
+	}
 
-		private SemVerBuilder()
-		{
+	public int patch()
+	{
+		return patch;
+	}
 
-		}
+	public Optional<Label> maybeLabel()
+	{
+		return maybeLabel;
+	}
 
-		public SemVerBuilder major( final int major )
-		{
-			this.major = major;
-			Preconditions.requireCondition( major >= 0 );
+	public Optional<BuildMeta> maybeMeta()
+	{
+		return maybeMeta;
+	}
 
-			return this;
-		}
-
-		public SemVerBuilder minor( final int minor )
-		{
-			this.minor = minor;
-			Preconditions.requireCondition( minor >= 0 );
-
-			return this;
-		}
-
-		public SemVerBuilder patch( final int patch )
-		{
-			this.patch = patch;
-			Preconditions.requireCondition( patch >= 0 );
-
-			return this;
-		}
-
-		public SemVerBuilder label( final Label label )
-		{
-			this.label = Preconditions.requireNotNull( label );
-
-			return this;
-		}
-
-		public SemVerBuilder meta( final BuildMeta meta )
-		{
-			this.meta = Preconditions.requireNotNull( meta );
-
-			return this;
-		}
-
-		public SemVer build()
-		{
-			final Optional<Label> label = Optional.ofNullable( this.label );
-			final Optional<BuildMeta> meta = Optional.ofNullable( this.meta );
-
-			return new SemVer( this.major, this.minor, this.patch, label, meta );
-		}
+	@Override
+	public int hashCode()
+	{
+		int result = major;
+		result = 31 * result + minor;
+		result = 31 * result + patch;
+		result = 31 * result + maybeLabel.hashCode();
+		result = 31 * result + maybeMeta.hashCode();
+		return result;
 	}
 
 	@Override
@@ -136,13 +96,75 @@ public final class SemVer
 	}
 
 	@Override
-	public int hashCode()
+	public String toString()
 	{
-		int result = major;
-		result = 31 * result + minor;
-		result = 31 * result + patch;
-		result = 31 * result + maybeLabel.hashCode();
-		result = 31 * result + maybeMeta.hashCode();
-		return result;
+		final String main = this.major + "." + this.minor + "." + this.patch;
+		final String withLabel = main + ( this.maybeLabel.isPresent() ? "-" + this.maybeLabel.get() : "" );
+		final String withMeta = withLabel + ( this.maybeMeta.isPresent() ? "+" + this.maybeMeta.get() : "" );
+
+		return withMeta;
+	}
+
+
+	public static final class SemVerBuilder
+	{
+		private static final Preconditions PRECONDITIONS = new Preconditions();
+
+		private int major;
+		private int minor;
+		private int patch;
+		private Label label;
+		private BuildMeta meta;
+
+		private SemVerBuilder()
+		{
+
+		}
+
+		public SemVerBuilder major( final int major )
+		{
+			this.major = major;
+			PRECONDITIONS.requireCondition( major >= 0 );
+
+			return this;
+		}
+
+		public SemVerBuilder minor( final int minor )
+		{
+			this.minor = minor;
+			PRECONDITIONS.requireCondition( minor >= 0 );
+
+			return this;
+		}
+
+		public SemVerBuilder patch( final int patch )
+		{
+			this.patch = patch;
+			PRECONDITIONS.requireCondition( patch >= 0 );
+
+			return this;
+		}
+
+		public SemVerBuilder label( final Label label )
+		{
+			this.label = PRECONDITIONS.requireNotNull( label );
+
+			return this;
+		}
+
+		public SemVerBuilder meta( final BuildMeta meta )
+		{
+			this.meta = PRECONDITIONS.requireNotNull( meta );
+
+			return this;
+		}
+
+		public SemVer build()
+		{
+			final Optional<Label> label = Optional.ofNullable( this.label );
+			final Optional<BuildMeta> meta = Optional.ofNullable( this.meta );
+
+			return new SemVer( this.major, this.minor, this.patch, label, meta );
+		}
 	}
 }
