@@ -20,8 +20,8 @@ dependencies:
   override:
     - chmod +x gradlew
 
-    # publish changelog to gh-pages so it can be hosted there
-    - ./gradlew generateChangelog
+    # start gradle daemon
+    - ./gradlew --version --daemon
 
   cache_directories:
     - "~/.gradle"
@@ -31,9 +31,18 @@ dependencies:
 test:
   override:
     - ./gradlew test
+    - ./gradlew jacocoTestReport
     - ./gradlew pitest
+
   post:
     # after all tests build the jars
+    # generates changelog
+    # generates jar
+    # generates javadoc
+    # generates sources
+    # tests
+    # coverages
+    # may contain duplicates but worth the whole process
     - ./gradlew build
 #    - cp build/tests/*.xml $CIRCLE_TEST_REPORTS
 
@@ -41,45 +50,144 @@ test:
 # deploying your code to your web servers
 # Only executed if all tasks are successful
 deployment:
+  pre:
+    # check into git
+    - git config user.name "Circle CI"
+    - git config user.email "robot+circleci@thatsich.de"
+    - git checkout gh-pages
+
   # just a label. Label names are up to you
   production:
     branch: production
     commands:
       # publish javadoc to gh-pages so it can be hosted there
-      - ./gradlew javadoc
-      - git config user.name "Circle CI"
-      - git config user.email "robot+circleci@thatsich.de"
-      - git checkout gh-pages
-      - rm -rf com resources
-      - mv build/docs/javadoc/* .
+      - mkdir -p javadoc/stable
+      - mv build/docs/javadoc/* javadoc/stable/*
       - git add .
       - git commit -m "[ci skip] Generate Javadoc"
+
+      # publish test reports
+      - mkdir -p test/stable
+      - mv build/reports/tests/* test/stable/*
+      - git add .
+      - git commit -m "[ci skip] Generate test"
+
+      # publish coverage reports
+      - mkdir -p coverage/stable
+      - mv build/reports/jacoco/html/* coverage/stable/*
+      - git add .
+      - git commit -m "[ci skip] Generate coverage"
+
+      # publish mutation reports
+      - mkdir -p pitest/stable
+      - mv build/reports/pitest/*/* pitest/stable/*
+      - git add .
+      - git commit -m "[ci skip] Generate mutation"
+
+      # publish changelog
+      - mkdir -p changelog/stable
+      - mv build/resources/main/CHANGELOG.md changelog/stable/CHANGELOG.md
+      - git add .
+      - git commit -m "[ci skip] Generate changelog"
+
+      # end publishing
       - git push origin gh-pages
 
       # upload to bintray
       - ./gradlew bintrayUpload
 
       # report coverage to coveralls
-      - ./gradlew jacocoTestReport coveralls
+      - ./gradlew coveralls
 
-      # update version eye badge
-      # versioneye.api_key is required for the plugin to work.
-      - ./gradlew -Pversioneye.api_key=$VERSION_EYE_KEY versioneye-update
+      # release a github release note as release
+      - ./gradlew githubRelease
 
-#  release:
-#    branch: release
-#    commands:
-      # publish github pre-release
-      # publish github tag
-#      -
+  release:
+    branch: release
+    commands:
+#       publish github pre-release
+#       publish github tag
 
-#  develop:
-#    branch: develop
-#    commands:
-      # generate changelog as artifact
-#      - ./gradlew generateChangelog
+      # publish javadoc to gh-pages so it can be hosted there
+      - mkdir -p javadoc/pre
+      - mv build/docs/javadoc/* javadoc/pre/*
+      - git add .
+      - git commit -m "[ci skip] Generate Javadoc"
 
+      # publish test reports
+      - mkdir -p test/pre
+      - mv build/reports/tests/* test/pre/*
+      - git add .
+      - git commit -m "[ci skip] Generate test"
 
+      # publish coverage reports
+      - mkdir -p coverage/pre
+      - mv build/reports/jacoco/html/* coverage/pre/*
+      - git add .
+      - git commit -m "[ci skip] Generate coverage"
+
+      # publish mutation reports
+      - mkdir -p pitest/pre
+      - mv build/reports/pitest/*/* pitest/pre/*
+      - git add .
+      - git commit -m "[ci skip] Generate mutation"
+
+      # publish changelog
+      - mkdir -p changelog/pre
+      - mv build/resources/main/CHANGELOG.md changelog/pre/CHANGELOG.md
+      - git add .
+      - git commit -m "[ci skip] Generate changelog"
+
+      # end publishing
+      - git push origin gh-pages
+
+      # upload to bintray as pre-release
+      - ./gradlew bintrayUpload
+
+      # report coverage to coveralls
+      - ./gradlew coveralls
+
+      # release a github release note as pre-release
+      - ./gradlew githubRelease
+
+  develop:
+    branch: develop
+    commands:
+      # publish javadoc to gh-pages so it can be hosted there
+      - mkdir -p javadoc/latest
+      - mv build/docs/javadoc/* javadoc/latest/*
+      - git add .
+      - git commit -m "[ci skip] Generate Javadoc"
+
+      # publish test reports
+      - mkdir -p test/latest
+      - mv build/reports/tests/* test/latest/*
+      - git add .
+      - git commit -m "[ci skip] Generate test"
+
+      # publish coverage reports
+      - mkdir -p coverage/latest
+      - mv build/reports/jacoco/html/* coverage/latest/*
+      - git add .
+      - git commit -m "[ci skip] Generate coverage"
+
+      # publish mutation reports
+      - mkdir -p pitest/latest
+      - mv build/reports/pitest/*/* pitest/latest/*
+      - git add .
+      - git commit -m "[ci skip] Generate mutation"
+
+      # publish changelog
+      - mkdir -p changelog/latest
+      - mv build/resources/main/CHANGELOG.md changelog/latest/CHANGELOG.md
+      - git add .
+      - git commit -m "[ci skip] Generate changelog"
+
+      # end publishing
+      - git push origin gh-pages
+
+      # report coverage to coveralls
+      - ./gradlew coveralls
 
       # publish github tag
 #      -

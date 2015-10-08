@@ -26,11 +26,6 @@ plugins {
     // see plugin: https://github.com/kt3k/coveralls-gradle-plugin/
     id "com.github.kt3k.coveralls" version "2.4.0"
 
-    // tracks dependency status
-    // see homepage: https://www.versioneye.com/
-    // see plugin: https://github.com/stempler/gradle-versioneye-plugin
-    id "org.standardout.versioneye" version "1.0.1"
-
     // upload to bintray / jcenter
     // see homepage: https://bintray.com
     // see plugin: https://github.com/bintray/gradle-bintray-plugin
@@ -89,7 +84,7 @@ artifacts {
 jacocoTestReport {
     reports {
         xml.enabled = true // coveralls plugin depends on xml format report
-        html.enabled = false
+        html.enabled = true
     }
 }
 
@@ -145,11 +140,6 @@ bintray {
         }
     }
     configurations = ['archives']
-}
-
-versioneye {
-    // only declared dependencies are checked for updates
-    dependencies = declared
 }
 
 changelog {
@@ -209,7 +199,7 @@ github {
     repo = "${project.name}"
     token = System.getenv('GITHUB_PLUGIN_KEY') ?: "GITHUB_PLUGIN_KEY"
     tagName = "${project.version}"
-    targetCommitish = 'master'
+    targetCommitish = currentBranch
     name = "v${project.version}"
 //    body = new File('resources/main/CHANGELOG.md').getText('UTF-8')
     body = this.changeLog
