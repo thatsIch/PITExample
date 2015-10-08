@@ -84,7 +84,7 @@ deployment:
 
       # publish changelog
       - mkdir -p changelog/stable
-      - mv build/resources/main/CHANGELOG.md changelog/stable/CHANGELOG.md
+      - cp build/resources/main/CHANGELOG.md changelog/stable/CHANGELOG.md
       - git add .
       - git commit -m "[ci skip] Generate changelog"
 
