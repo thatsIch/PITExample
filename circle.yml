@@ -44,18 +44,16 @@ test:
     # coverages
     # may contain duplicates but worth the whole process
     - ./gradlew build
-#    - cp build/tests/*.xml $CIRCLE_TEST_REPORTS
 
-
-# deploying your code to your web servers
-# Only executed if all tasks are successful
-deployment:
-  pre:
     # check into git
     - git config user.name "Circle CI"
     - git config user.email "robot+circleci@thatsich.de"
     - git checkout gh-pages
 
+
+# deploying your code to your web servers
+# Only executed if all tasks are successful
+deployment:
   # just a label. Label names are up to you
   production:
     branch: production
