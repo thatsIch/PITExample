@@ -72,7 +72,7 @@ private ProjectVersion readVersion() {
     try {
         exec {
             executable = 'git'
-            args = ['describe', '--tags', "HEAD"]
+            args = ['describe', '--abbrev=0']
             standardOutput = outStream
         }
 
