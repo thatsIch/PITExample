@@ -21,7 +21,7 @@ dependencies:
     - chmod +x gradlew
 
     # start gradle daemon
-    - ./gradlew --version --daemon
+    - ./gradlew tasks --daemon
 
   cache_directories:
     - "~/.gradle"
