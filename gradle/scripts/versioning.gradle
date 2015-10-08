@@ -78,6 +78,9 @@ private ProjectVersion readVersion() {
 
         final def fullVersion = outStream.toString().trim()
         final def matcher = fullVersion =~ /^(\d+)\.(\d+)\.(\d+)(-([\dA-Za-z-]+))?(\+([\dA-Za-z-]+))?/
+        if (matcher.size < 1) {
+            throw new IllegalStateException("No matching tag was found: \"$fullVersion\".")
+        }
         final def match = matcher[0]
 
         final def Integer major = match[1].toInteger()
@@ -94,6 +97,8 @@ private ProjectVersion readVersion() {
         projectVersion = new ProjectVersion(0, 0, 0, null, null)
 
         tag("/dev/null", projectVersion.toString())
+
+        push()
     }
 
     return projectVersion
