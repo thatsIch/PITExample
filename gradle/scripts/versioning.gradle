@@ -78,7 +78,7 @@ private ProjectVersion readVersion() {
 
         final def fullVersion = outStream.toString().trim()
         final def matcher = fullVersion =~ /^(\d+)\.(\d+)\.(\d+)(-([\dA-Za-z-]+))?(\+([\dA-Za-z-]+))?/
-        if (matcher.size < 1) {
+        if (matcher.count < 1) {
             throw new IllegalStateException("No matching tag was found: \"$fullVersion\".")
         }
         final def match = matcher[0]
@@ -141,9 +141,14 @@ private void tag(String oldTag, String newTag) {
     String message = "Incrementing project version: $oldTag -> $newTag"
     logger.quiet message
 
-    exec {
-        executable = 'git'
-        args = ['tag', '-a', newTag, "-m", message]
+    try {
+        exec {
+            executable = 'git'
+            args = ['tag', '-a', newTag, "-m", message]
+        }
+    }
+    catch (exception) {
+        logger.warn "Tagging not possible: $exception"
     }
 }
 
