@@ -3,6 +3,7 @@ PITExample - Changelog
 
 * Unreleased
 * ----------
+* Include all folders starting with . (thatsIch)
 * Create folders via mkdir (thatsIch)
 * Inline commands (thatsIch)
 * create folder on the fly (thatsIch)
