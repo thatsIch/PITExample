@@ -19,9 +19,9 @@ machine:
 dependencies:
   override:
     - chmod +x gradlew
-
     # print CPU architecture
     - lscpu
+    - ./gradlew clean
 
     # required to start first for it to compile
     # start gradle daemon
@@ -161,35 +161,35 @@ deployment:
       - mkdir -p docs/javadoc/latest
       - cp -a build/docs/javadoc/* docs/javadoc/latest/ --verbose
       - git status
-      - git add --verbose -A
+      - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate JavaDoc"
 
       # publish test reports
       - mkdir -p docs/test/latest
       - cp -a build/reports/tests/* docs/test/latest/ --verbose
       - git status
-      - git add --verbose -A
+      - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate JUnit Report"
 
       # publish coverage reports
       - mkdir -p docs/coverage/latest
       - cp -a build/reports/jacoco/test/html/* docs/coverage/latest/ --verbose
       - git status
-      - git add --verbose -A
+      - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Coverage Report"
 
       # publish mutation reports
       - mkdir -p docs/pitest/latest
       - cp -a build/reports/pitest/*/* docs/pitest/latest/ --verbose
       - git status
-      - git add --verbose -A
+      - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Mutation Report"
 
       # publish changelog
       - mkdir -p docs/changelog/latest
       - cp -a CHANGELOG.md docs/changelog/latest/CHANGELOG.md --verbose
       - git status
-      - git add --verbose -A
+      - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Changelog"
 
       # end publishing
