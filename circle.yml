@@ -27,9 +27,9 @@ dependencies:
     # start gradle daemon
     - ./gradlew -b changelog.gradle generateChangelog
 
-#  cache_directories:
-#    - "~/.gradle"
-#    - ".gradle"
+  cache_directories:
+    - "~/.gradle"
+    - ".gradle"
 
 # running your tests
 test:
