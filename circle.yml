@@ -2,7 +2,7 @@
 general:
   artifacts:
     - "build/reports"
-    - "build/resources/main/CHANGELOG.md"
+    - "CHANGELOG.md"
     - "build/libs"
 
   branches:
@@ -22,7 +22,7 @@ dependencies:
 
     # required to start first for it to compile
     # start gradle daemon
-    - ./gradlew generateChangelog --daemon
+    - ./gradlew -b changelog.gradle generateChangelog --daemon
 
   cache_directories:
     - "~/.gradle"
@@ -85,7 +85,7 @@ deployment:
 
       # publish changelog
       - mkdir -p changelog/stable
-      - cp build/resources/main/CHANGELOG.md changelog/stable/CHANGELOG.md
+      - cp CHANGELOG.md changelog/stable/CHANGELOG.md
       - git add .
       - git commit -m "[ci skip] Generate changelog"
 
@@ -133,7 +133,7 @@ deployment:
 
       # publish changelog
       - mkdir -p changelog/pre
-      - mv build/resources/main/CHANGELOG.md changelog/pre/CHANGELOG.md
+      - mv CHANGELOG.md changelog/pre/CHANGELOG.md
       - git add .
       - git commit -m "[ci skip] Generate changelog"
 
@@ -178,7 +178,7 @@ deployment:
 
       # publish changelog
       - mkdir -p changelog/latest
-      - mv build/resources/main/CHANGELOG.md changelog/latest/CHANGELOG.md
+      - mv CHANGELOG.md changelog/latest/CHANGELOG.md
       - git add .
       - git commit -m "[ci skip] Generate changelog"
 
