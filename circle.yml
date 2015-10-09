@@ -59,19 +59,19 @@ test:
     - cp -r CHANGELOG.html $CIRCLE_ARTIFACTS
 
     - mkdir -p $CIRCLE_ARTIFACTS/jars
-    - cp -r build/libs/* $CIRCLE_ARTIFACTS/jars
+    - cp -r build/libs/ $CIRCLE_ARTIFACTS/jars
 
     - mkdir -p $CIRCLE_ARTIFACTS/javadoc
-    - cp -r build/docs/javadoc/* $CIRCLE_ARTIFACTS/javadoc
+    - cp -r build/docs/javadoc/ $CIRCLE_ARTIFACTS/javadoc
 
     - mkdir -p $CIRCLE_ARTIFACTS/test
-    - cp -r build/reports/tests/* $CIRCLE_ARTIFACTS/test
+    - cp -r build/reports/tests/ $CIRCLE_ARTIFACTS/test
 
     - mkdir -p $CIRCLE_ARTIFACTS/coverage
-    - cp -r build/reports/jacoco/test/html/* $CIRCLE_ARTIFACTS/coverage
+    - cp -r build/reports/jacoco/test/html/ $CIRCLE_ARTIFACTS/coverage
 
     - mkdir -p $CIRCLE_ARTIFACTS/mutation
-    - cp -r build/reports/pitest/* $CIRCLE_ARTIFACTS/mutation
+    - cp -r build/reports/pitest/ $CIRCLE_ARTIFACTS/mutation
 
 # deploying your code to your web servers
 # Only executed if all tasks are successful
@@ -82,26 +82,26 @@ deployment:
     commands:
       # publish javadoc to gh-pages so it can be hosted there
       - mkdir -p javadoc/stable
-      - mv build/docs/javadoc/* javadoc/stable/
-      - git add javadoc/stable/* --force --ignore-removal
+      - mv build/docs/javadoc/ javadoc/stable/
+      - git add javadoc/stable/ --force --ignore-removal
       - git commit -m "[ci skip] Generate Javadoc"
 
       # publish test reports
       - mkdir -p test/stable
-      - mv build/reports/tests/* test/stable/
-      - git add test/stable/* --force --ignore-removal
+      - mv build/reports/tests/ test/stable/
+      - git add test/stable/ --force --ignore-removal
       - git commit -m "[ci skip] Generate test"
 
       # publish coverage reports
       - mkdir -p coverage/stable
-      - mv build/reports/jacoco/test/html/* coverage/stable/
-      - git add coverage/stable/* --force --ignore-removal
+      - mv build/reports/jacoco/test/html/ coverage/stable/
+      - git add coverage/stable/ --force --ignore-removal
       - git commit -m "[ci skip] Generate coverage"
 
       # publish mutation reports
       - mkdir -p pitest/stable
-      - mv build/reports/pitest/*/* pitest/stable/
-      - git add pitest/stable/* --force --ignore-removal
+      - mv build/reports/pitest/*/ pitest/stable/
+      - git add pitest/stable/ --force --ignore-removal
       - git commit -m "[ci skip] Generate mutation"
 
       # publish changelog
@@ -175,36 +175,31 @@ deployment:
     commands:
       # publish javadoc to gh-pages so it can be hosted there
       - mkdir -p docs/javadoc/latest
-      - cp -r build/docs/javadoc/* docs/javadoc/latest/ --verbose
-      - git status
+      - cp -r build/docs/javadoc/ docs/javadoc/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate JavaDoc"
 
       # publish test reports
       - mkdir -p docs/test/latest
-      - cp -r build/reports/tests/* docs/test/latest/ --verbose
-      - git status
+      - cp -r build/reports/tests/ docs/test/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate JUnit Report"
 
       # publish coverage reports
       - mkdir -p docs/coverage/latest
-      - cp -r build/reports/jacoco/test/html/* docs/coverage/latest/ --verbose
-      - git status
+      - cp -r build/reports/jacoco/test/html/ docs/coverage/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Coverage Report"
 
       # publish mutation reports
       - mkdir -p docs/pitest/latest
-      - cp -r build/reports/pitest/*/* docs/pitest/latest/ --verbose
-      - git status
+      - cp -r build/reports/pitest/*/ docs/pitest/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Mutation Report"
 
       # publish changelog
       - mkdir -p docs/changelog/latest
       - cp -r CHANGELOG.md docs/changelog/latest/CHANGELOG.md --verbose
-      - git status
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Changelog"
 
