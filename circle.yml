@@ -21,11 +21,10 @@ dependencies:
     - chmod +x gradlew
     # print CPU architecture
     - lscpu
-    - ./gradlew clean
 
     # required to start first for it to compile
     # start gradle daemon
-    - ./gradlew -b changelog.gradle generateChangelog
+    - ./gradlew -b changelog.gradle clean generateChangelog
 
   cache_directories:
     - "~/.gradle"
