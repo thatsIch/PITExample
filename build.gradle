@@ -111,7 +111,7 @@ pitest {
     pitestVersion = '1.1.7'
     reportDir = "build/reports/pitest"
     targetClasses = ['de.thatsich.*']
-    threads = 4
+    threads = 32
     outputFormats = ['HTML']
     mutators = ['ALL']
 }
