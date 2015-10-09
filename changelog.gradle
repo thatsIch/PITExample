@@ -53,6 +53,11 @@ changelog {
         if (input.contains('[ci skip] ')) {
             input = input.minus('[ci skip] ')
         }
+        else if (input.empty) {
+//            skip
+
+            return
+        }
 
         "* $input"
     }
