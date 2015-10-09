@@ -54,9 +54,7 @@ changelog {
             input = input.minus('[ci skip] ')
         }
         else if (input.empty) {
-//            skip
-
-            return
+            ""
         }
 
         "* $input"
