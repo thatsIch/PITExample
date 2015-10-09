@@ -20,6 +20,7 @@ dependencies:
   override:
     - chmod +x gradlew
 
+    # required to start first for it to compile
     # start gradle daemon
     - ./gradlew generateChangelog --daemon
 
