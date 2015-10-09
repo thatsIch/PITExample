@@ -22,7 +22,7 @@ dependencies:
 
     # required to start first for it to compile
     # start gradle daemon
-    - ./gradlew -b changelog.gradle generateChangelog --daemon
+    - ./gradlew -b changelog.gradle generateChangelog
 
   cache_directories:
     - "~/.gradle"
