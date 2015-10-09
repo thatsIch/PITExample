@@ -56,12 +56,22 @@ test:
     - git checkout gh-pages
 
     # move all artifacts to $CIRCLE_ARTIFACTS
-    - cp -r --parents CHANGELOG.html $CIRCLE_ARTIFACTS
-    - cp -r --parents build/libs/* $CIRCLE_ARTIFACTS/jars
-    - cp -r --parents build/docs/javadoc/* $CIRCLE_ARTIFACTS/javadoc
-    - cp -r --parents build/reports/tests/* $CIRCLE_ARTIFACTS/test
-    - cp -r --parents build/reports/jacoco/test/html/* $CIRCLE_ARTIFACTS/coverage
-    - cp -r --parents build/reports/pitest/* $CIRCLE_ARTIFACTS/mutation
+    - cp -r CHANGELOG.html $CIRCLE_ARTIFACTS
+
+    - mkdir -p $CIRCLE_ARTIFACTS/jars
+    - cp -r build/libs/* $CIRCLE_ARTIFACTS/jars
+
+    - mkdir -p $CIRCLE_ARTIFACTS/javadoc
+    - cp -r build/docs/javadoc/* $CIRCLE_ARTIFACTS/javadoc
+
+    - mkdir -p $CIRCLE_ARTIFACTS/test
+    - cp -r build/reports/tests/* $CIRCLE_ARTIFACTS/test
+
+    - mkdir -p $CIRCLE_ARTIFACTS/coverage
+    - cp -r build/reports/jacoco/test/html/* $CIRCLE_ARTIFACTS/coverage
+
+    - mkdir -p $CIRCLE_ARTIFACTS/mutation
+    - cp -r build/reports/pitest/* $CIRCLE_ARTIFACTS/mutation
 
 # deploying your code to your web servers
 # Only executed if all tasks are successful
@@ -71,27 +81,32 @@ deployment:
     branch: production
     commands:
       # publish javadoc to gh-pages so it can be hosted there
-      - mv -p build/docs/javadoc/* javadoc/stable/
+      - mkdir -p javadoc/stable
+      - mv build/docs/javadoc/* javadoc/stable/
       - git add javadoc/stable/* --force --ignore-removal
       - git commit -m "[ci skip] Generate Javadoc"
 
       # publish test reports
-      - mv -p build/reports/tests/* test/stable/
+      - mkdir -p test/stable
+      - mv build/reports/tests/* test/stable/
       - git add test/stable/* --force --ignore-removal
       - git commit -m "[ci skip] Generate test"
 
       # publish coverage reports
-      - mv -p build/reports/jacoco/test/html/* coverage/stable/
+      - mkdir -p coverage/stable
+      - mv build/reports/jacoco/test/html/* coverage/stable/
       - git add coverage/stable/* --force --ignore-removal
       - git commit -m "[ci skip] Generate coverage"
 
       # publish mutation reports
-      - mv -p build/reports/pitest/*/* pitest/stable/
+      - mkdir -p pitest/stable
+      - mv build/reports/pitest/*/* pitest/stable/
       - git add pitest/stable/* --force --ignore-removal
       - git commit -m "[ci skip] Generate mutation"
 
       # publish changelog
-      - cp --parents CHANGELOG.md changelog/stable/CHANGELOG.md
+      - mkdir -p changelog/stable
+      - cp CHANGELOG.md changelog/stable/CHANGELOG.md
       - git add changelog/stable/CHANGELOG.md --force --ignore-removal
       - git commit -m "[ci skip] Generate changelog"
 
