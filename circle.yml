@@ -56,12 +56,12 @@ test:
     - git checkout gh-pages
 
     # move all artifacts to $CIRCLE_ARTIFACTS
-    - cp -r CHANGELOG.html $CIRCLE_ARTIFACTS
-    - cp -r build/libs/* $CIRCLE_ARTIFACTS/jars
-    - cp -r build/docs/javadoc/* $CIRCLE_ARTIFACTS/javadoc
-    - cp -r build/reports/tests/* $CIRCLE_ARTIFACTS/test
-    - cp -r build/reports/jacoco/test/html/* $CIRCLE_ARTIFACTS/coverage
-    - cp -r build/reports/pitest/* $CIRCLE_ARTIFACTS/mutation
+    - cp -r --parents CHANGELOG.html $CIRCLE_ARTIFACTS
+    - cp -r --parents build/libs/* $CIRCLE_ARTIFACTS/jars
+    - cp -r --parents build/docs/javadoc/* $CIRCLE_ARTIFACTS/javadoc
+    - cp -r --parents build/reports/tests/* $CIRCLE_ARTIFACTS/test
+    - cp -r --parents build/reports/jacoco/test/html/* $CIRCLE_ARTIFACTS/coverage
+    - cp -r --parents build/reports/pitest/* $CIRCLE_ARTIFACTS/mutation
 
 # deploying your code to your web servers
 # Only executed if all tasks are successful
