@@ -158,39 +158,39 @@ deployment:
     branch: develop
     commands:
       # publish javadoc to gh-pages so it can be hosted there
-      - mkdir -p javadoc/latest
-      - cp -a build/docs/javadoc/* javadoc/latest/ --verbose
+      - mkdir -p docs/javadoc/latest
+      - cp -a build/docs/javadoc/* docs/javadoc/latest/ --verbose
       - git status
-      - git add --verbose --force javadoc/latest
-      - git commit --verbose --verbose -m "[ci skip] Generate Javadoc"
+      - git add --verbose -A
+      - git commit --verbose --verbose -m "[ci skip] Generate JavaDoc"
 
       # publish test reports
-      - mkdir -p test/latest
-      - cp -a build/reports/tests/* test/latest/ --verbose
+      - mkdir -p docs/test/latest
+      - cp -a build/reports/tests/* docs/test/latest/ --verbose
       - git status
-      - git add --verbose --force test/latest
-      - git commit --verbose --verbose -m "[ci skip] Generate test"
+      - git add --verbose -A
+      - git commit --verbose --verbose -m "[ci skip] Generate JUnit Report"
 
       # publish coverage reports
-      - mkdir -p coverage/latest
-      - cp -a build/reports/jacoco/test/html/* coverage/latest/ --verbose
+      - mkdir -p docs/coverage/latest
+      - cp -a build/reports/jacoco/test/html/* docs/coverage/latest/ --verbose
       - git status
-      - git add --verbose --force coverage/latest
-      - git commit --verbose --verbose -m "[ci skip] Generate coverage"
+      - git add --verbose -A
+      - git commit --verbose --verbose -m "[ci skip] Generate Coverage Report"
 
       # publish mutation reports
-      - mkdir -p pitest/latest
-      - cp -a build/reports/pitest/*/* pitest/latest/ --verbose
+      - mkdir -p docs/pitest/latest
+      - cp -a build/reports/pitest/*/* docs/pitest/latest/ --verbose
       - git status
-      - git add --verbose --force pitest/latest
-      - git commit --verbose --verbose -m "[ci skip] Generate mutation"
+      - git add --verbose -A
+      - git commit --verbose --verbose -m "[ci skip] Generate Mutation Report"
 
       # publish changelog
-      - mkdir -p changelog/latest
-      - cp -a CHANGELOG.md changelog/latest/CHANGELOG.md --verbose
+      - mkdir -p docs/changelog/latest
+      - cp -a CHANGELOG.md docs/changelog/latest/CHANGELOG.md --verbose
       - git status
-      - git add --verbose --force changelog/latest/CHANGELOG.md
-      - git commit --verbose --verbose -m "[ci skip] Generate changelog"
+      - git add --verbose -A
+      - git commit --verbose --verbose -m "[ci skip] Generate Changelog"
 
       # end publishing
 #      - git push origin gh-pages

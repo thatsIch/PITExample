@@ -19,6 +19,9 @@
 # include sourcecode
 !src/
 
+# include documents
+!docs/
+
 # include git important files
 !.gitmodules
 !.gitignore
