@@ -192,13 +192,17 @@ deployment:
       - git commit --verbose --verbose -m "[ci skip] Generate Changelog"
 
       # end publishing
-#      - git push origin gh-pages
+      - git push origin gh-pages
+
+      # switch back to branch
+      # else no gradle there
+      - git checkout $CIRCLE_BRANCH
 
       # report coverage to coveralls
       - ./gradlew coveralls
 
       # publish github tag
-#      -
+      - git push --tags
 
 #  pullrequest:
 #    branch: /.*/
