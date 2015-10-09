@@ -3,6 +3,7 @@ PITExample - Changelog
 
 * Unreleased
 * ----------
+* Just copies but does not rename (thatsIch)
 * Include all folders starting with . (thatsIch)
 * Create folders via mkdir (thatsIch)
 * Inline commands (thatsIch)
@@ -65,7 +66,7 @@ PITExample - Changelog
 * Add develop for debugging (thatsIch)
 * Try with grouping of regex (thatsIch)
 * Try other regex (thatsIch)
-* 
+
 * 1.0 (Tue Oct 6 15:24:11 2015 +0200)
 * -----------------------------------
 * Add develop for debugging (thatsIch)
@@ -94,7 +95,7 @@ PITExample - Changelog
 * Using ReadTheDocs (thatsIch)
 * Apparently no env var for version eye plugin (thatsIch)
 * Trying changelog plugin (thatsIch)
-* 
+
 * 0.0.1 (Mon Oct 5 21:01:23 2015 +0200)
 * -------------------------------------
 * Add versioneye integration call (thatsIch)
@@ -132,4 +133,3 @@ PITExample - Changelog
 * Added build script with test source (thatsIch)
 * Add gradle wrapper (thatsIch)
 * Initial commit (thatsIch)
-* 
