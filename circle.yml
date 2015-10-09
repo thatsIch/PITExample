@@ -162,7 +162,7 @@ deployment:
       # publish test reports
       - mkdir -p test/latest
       - cp -a build/reports/tests/* test/latest/ --verbose
-      - git add --ignore-removal --verbose test/latest/* --force
+      - git add --verbose --force --ignore-removal test/latest/*
       - git commit -m "[ci skip] Generate test"
 
       # publish coverage reports
