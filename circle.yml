@@ -74,7 +74,7 @@ deployment:
 
       # publish coverage reports
       - mkdir -p coverage/stable
-      - mv build/reports/jacoco/html/* coverage/stable/
+      - mv build/reports/jacoco/test/html/* coverage/stable/
       - git add .
       - git commit -m "[ci skip] Generate coverage"
 
@@ -122,7 +122,7 @@ deployment:
 
       # publish coverage reports
       - mkdir -p coverage/pre
-      - mv build/reports/jacoco/html/* coverage/pre/
+      - mv build/reports/jacoco/test/html/* coverage/pre/
       - git add .
       - git commit -m "[ci skip] Generate coverage"
 
@@ -167,7 +167,7 @@ deployment:
 
       # publish coverage reports
       - mkdir -p coverage/latest
-      - mv build/reports/jacoco/html/* coverage/latest/
+      - mv build/reports/jacoco/test/html/* coverage/latest/
       - git add .
       - git commit -m "[ci skip] Generate coverage"
 
