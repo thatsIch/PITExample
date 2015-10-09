@@ -156,32 +156,37 @@ deployment:
       # publish javadoc to gh-pages so it can be hosted there
       - mkdir -p javadoc/latest
       - cp -a build/docs/javadoc/* javadoc/latest/ --verbose
-      - git add --force --ignore-removal --verbose javadoc/latest/*
-      - git commit --verbose -m "[ci skip] Generate Javadoc"
+      - git rm --cached -r build/docs/javadoc
+      - git add --verbose javadoc/latest
+      - git commit --verbose --verbose -m "[ci skip] Generate Javadoc"
 
       # publish test reports
       - mkdir -p test/latest
       - cp -a build/reports/tests/* test/latest/ --verbose
-      - git add --verbose --force --ignore-removal test/latest/*
-      - git commit --verbose -m "[ci skip] Generate test"
+      - git rm --cached -r build/reports/tests
+      - git add --verbose test/latest
+      - git commit --verbose --verbose -m "[ci skip] Generate test"
 
       # publish coverage reports
       - mkdir -p coverage/latest
       - cp -a build/reports/jacoco/test/html/* coverage/latest/ --verbose
-      - git add  --force --ignore-removal --verbose coverage/latest/*
-      - git commit --verbose -m "[ci skip] Generate coverage"
+      - git rm --cached -r build/reports/jacoco/test/html
+      - git add --verbose coverage/latest
+      - git commit --verbose --verbose -m "[ci skip] Generate coverage"
 
       # publish mutation reports
       - mkdir -p pitest/latest
       - cp -a build/reports/pitest/*/* pitest/latest/ --verbose
-      - git add --force --ignore-removal --verbose pitest/latest/*
-      - git commit --verbose -m "[ci skip] Generate mutation"
+      - git rm --cached -r build/reports/pitest
+      - git add --verbose pitest/latest
+      - git commit --verbose --verbose -m "[ci skip] Generate mutation"
 
       # publish changelog
       - mkdir -p changelog/latest
       - cp -a CHANGELOG.md changelog/latest/CHANGELOG.md --verbose
-      - git add --force --ignore-removal --verbose changelog/latest/CHANGELOG.md
-      - git commit --verbose -m "[ci skip] Generate changelog"
+      - git rm --cached -r CHANGELOG.md
+      - git add --verbose changelog/latest/CHANGELOG.md
+      - git commit --verbose --verbose -m "[ci skip] Generate changelog"
 
       # end publishing
       - git push origin gh-pages
