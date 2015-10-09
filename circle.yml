@@ -49,6 +49,7 @@ test:
     # check into git
     - git config user.name "Circle CI"
     - git config user.email "robot+circleci@thatsich.de"
+    - git reset --hard
     - git checkout gh-pages
 
 
