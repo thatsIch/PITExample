@@ -20,6 +20,9 @@ dependencies:
   override:
     - chmod +x gradlew
 
+    # print CPU architecture
+    - lscpu
+
     # required to start first for it to compile
     # start gradle daemon
     - ./gradlew -b changelog.gradle generateChangelog
