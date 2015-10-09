@@ -175,25 +175,25 @@ deployment:
     commands:
       # publish javadoc to gh-pages so it can be hosted there
       - mkdir -p docs/javadoc/latest
-      - cp -r build/docs/javadoc/ docs/javadoc/latest/ --verbose
+      - cp -r build/docs/javadoc/. build/docs/javadoc/* docs/javadoc/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate JavaDoc"
 
       # publish test reports
       - mkdir -p docs/test/latest
-      - cp -r build/reports/tests/ docs/test/latest/ --verbose
+      - cp -r build/reports/tests/. build/reports/tests/* docs/test/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate JUnit Report"
 
       # publish coverage reports
       - mkdir -p docs/coverage/latest
-      - cp -r build/reports/jacoco/test/html/ docs/coverage/latest/ --verbose
+      - cp -r build/reports/jacoco/test/html/. build/reports/jacoco/test/html/* docs/coverage/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Coverage Report"
 
       # publish mutation reports
       - mkdir -p docs/pitest/latest
-      - cp -r build/reports/pitest/*/ docs/pitest/latest/ --verbose
+      - cp -r build/reports/pitest/*/. build/reports/pitest/*/* docs/pitest/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Mutation Report"
 
