@@ -62,32 +62,32 @@ deployment:
     commands:
       # publish javadoc to gh-pages so it can be hosted there
       - mkdir -p javadoc/stable
-      - mv build/docs/javadoc/* javadoc/stable/*
-      - git add .
+      - mv build/docs/javadoc/* javadoc/stable/
+      - git add javadoc/stable/* --force --ignore-removal
       - git commit -m "[ci skip] Generate Javadoc"
 
       # publish test reports
       - mkdir -p test/stable
       - mv build/reports/tests/* test/stable/
-      - git add .
+      - git add test/stable/* --force --ignore-removal
       - git commit -m "[ci skip] Generate test"
 
       # publish coverage reports
       - mkdir -p coverage/stable
       - mv build/reports/jacoco/test/html/* coverage/stable/
-      - git add .
+      - git add coverage/stable/* --force --ignore-removal
       - git commit -m "[ci skip] Generate coverage"
 
       # publish mutation reports
       - mkdir -p pitest/stable
       - mv build/reports/pitest/*/* pitest/stable/
-      - git add .
+      - git add pitest/stable/* --force --ignore-removal
       - git commit -m "[ci skip] Generate mutation"
 
       # publish changelog
       - mkdir -p changelog/stable
       - cp CHANGELOG.md changelog/stable/CHANGELOG.md
-      - git add .
+      - git add changelog/stable/CHANGELOG.md --force --ignore-removal
       - git commit -m "[ci skip] Generate changelog"
 
       # end publishing
@@ -110,31 +110,31 @@ deployment:
 
       # publish javadoc to gh-pages so it can be hosted there
       - mkdir -p javadoc/pre
-      - mv build/docs/javadoc/* javadoc/pre/
+      - cp -a build/docs/javadoc/* javadoc/pre/
       - git add .
       - git commit -m "[ci skip] Generate Javadoc"
 
       # publish test reports
       - mkdir -p test/pre
-      - mv build/reports/tests/* test/pre/
+      - cp -a build/reports/tests/* test/pre/
       - git add .
       - git commit -m "[ci skip] Generate test"
 
       # publish coverage reports
       - mkdir -p coverage/pre
-      - mv build/reports/jacoco/test/html/* coverage/pre/
+      - cp -a build/reports/jacoco/test/html/* coverage/pre/
       - git add .
       - git commit -m "[ci skip] Generate coverage"
 
       # publish mutation reports
       - mkdir -p pitest/pre
-      - mv build/reports/pitest/*/* pitest/pre/
+      - cp -a build/reports/pitest/*/* pitest/pre/
       - git add .
       - git commit -m "[ci skip] Generate mutation"
 
       # publish changelog
       - mkdir -p changelog/pre
-      - mv CHANGELOG.md changelog/pre/CHANGELOG.md
+      - cp -a CHANGELOG.md changelog/pre/CHANGELOG.md
       - git add .
       - git commit -m "[ci skip] Generate changelog"
 
@@ -155,32 +155,32 @@ deployment:
     commands:
       # publish javadoc to gh-pages so it can be hosted there
       - mkdir -p javadoc/latest
-      - mv build/docs/javadoc/* javadoc/latest/
-      - git add .
+      - cp -a build/docs/javadoc/* javadoc/latest/
+      - git add javadoc/latest/* --force --ignore-removal
       - git commit -m "[ci skip] Generate Javadoc"
 
       # publish test reports
       - mkdir -p test/latest
-      - mv build/reports/tests/* test/latest/
-      - git add .
+      - cp -a build/reports/tests/* test/latest/
+      - git add test/latest/* --force --ignore-removal
       - git commit -m "[ci skip] Generate test"
 
       # publish coverage reports
       - mkdir -p coverage/latest
-      - mv build/reports/jacoco/test/html/* coverage/latest/
-      - git add .
+      - cp -a build/reports/jacoco/test/html/* coverage/latest/
+      - git add coverage/latest/* --force --ignore-removal
       - git commit -m "[ci skip] Generate coverage"
 
       # publish mutation reports
       - mkdir -p pitest/latest
-      - mv build/reports/pitest/*/* pitest/latest/
-      - git add .
+      - cp -a build/reports/pitest/*/* pitest/latest/
+      - git add pitest/latest/* --force --ignore-removal
       - git commit -m "[ci skip] Generate mutation"
 
       # publish changelog
       - mkdir -p changelog/latest
-      - mv CHANGELOG.md changelog/latest/CHANGELOG.md
-      - git add .
+      - cp -a CHANGELOG.md changelog/latest/CHANGELOG.md
+      - git add changelog/latest/CHANGELOG.md --force --ignore-removal
       - git commit -m "[ci skip] Generate changelog"
 
       # end publishing
