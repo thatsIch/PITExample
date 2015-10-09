@@ -52,11 +52,20 @@ changelog {
         String input = it as String
         if (input.contains('[ci skip] ')) {
             input = input.minus('[ci skip] ')
+
+            "* $input"
         }
         else if (input.empty) {
-            return ""
+            input
         }
-
-        "* $input"
+        else if (input.contains('---')) {
+            input
+        }
+        else if (input == "Unreleased") {
+            input
+        }
+        else {
+            "* $input"
+        }
     }
 }
