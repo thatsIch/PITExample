@@ -198,6 +198,9 @@ deployment:
       # else no gradle there
       - git checkout $CIRCLE_BRANCH
 
+      # give gradle back its permissions
+      - chmod +x gradlew
+
       # report coverage to coveralls
       - ./gradlew coveralls
 
