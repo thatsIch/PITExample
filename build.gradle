@@ -2,9 +2,8 @@ buildscript {
     repositories {
         jcenter()
     }
-
     dependencies {
-        classpath 'com.palantir:jacoco-coverage:0.3.0'
+        classpath "com.google.guava:guava:18.0"
     }
 }
 
@@ -35,11 +34,11 @@ plugins {
     // see homepage:  https://github.com
     // see plugin: https://github.com/riiid/gradle-github-plugin
     id "co.riiid.gradle" version "0.3.1"
-}
 
-// evaluates jacoco coverage
-// see plugin: https://github.com/palantir/gradle-jacoco-coverage
-apply plugin: 'com.palantir.jacoco-coverage'
+    // evaluates jacoco coverage
+    // see plugin: https://github.com/palantir/gradle-jacoco-coverage
+    id "com.palantir.jacoco-coverage" version "0.3.0"
+}
 
 // import ext.projectversion
 apply from: 'gradle/scripts/versioning.gradle'
