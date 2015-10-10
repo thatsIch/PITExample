@@ -53,23 +53,23 @@ test:
     - git fetch origin
     - git reset --hard origin/gh-pages
 
-    # move all artifacts to $CIRCLE_ARTIFACTS
+    # copy all artifacts to $CIRCLE_ARTIFACTS
     - cp -r CHANGELOG.html $CIRCLE_ARTIFACTS
 
     - mkdir -p $CIRCLE_ARTIFACTS/jars
-    - cp -r build/libs/ $CIRCLE_ARTIFACTS/jars
+    - cp -r build/libs/. build/libs/* $CIRCLE_ARTIFACTS/jars
 
     - mkdir -p $CIRCLE_ARTIFACTS/javadoc
-    - cp -r build/docs/javadoc/ $CIRCLE_ARTIFACTS/javadoc
+    - cp -r build/reports/tests/. build/reports/tests/* $CIRCLE_ARTIFACTS/javadoc
 
     - mkdir -p $CIRCLE_ARTIFACTS/test
-    - cp -r build/reports/tests/ $CIRCLE_ARTIFACTS/test
+    - cp -r build/reports/tests/. build/reports/tests/* $CIRCLE_ARTIFACTS/test
 
     - mkdir -p $CIRCLE_ARTIFACTS/coverage
-    - cp -r build/reports/jacoco/test/html/ $CIRCLE_ARTIFACTS/coverage
+    - cp -r build/reports/jacoco/test/html/. build/reports/jacoco/test/html/* $CIRCLE_ARTIFACTS/coverage
 
     - mkdir -p $CIRCLE_ARTIFACTS/mutation
-    - cp -r build/reports/pitest/ $CIRCLE_ARTIFACTS/mutation
+    - cp -r build/reports/pitest/*/. build/reports/pitest/*/* $CIRCLE_ARTIFACTS/mutation
 
 # deploying your code to your web servers
 # Only executed if all tasks are successful
