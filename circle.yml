@@ -50,6 +50,8 @@ test:
     - git config core.autocrlf false
     - git reset --hard
     - git checkout gh-pages
+    - git fetch origin
+    - git reset --hard origin/gh-pages
 
     # move all artifacts to $CIRCLE_ARTIFACTS
     - cp -r CHANGELOG.html $CIRCLE_ARTIFACTS
@@ -200,8 +202,6 @@ deployment:
       - git commit --verbose --verbose -m "[ci skip] Generate Changelog"
 
       # end publishing
-      - git fetch origin
-      - git reset --hard origin/gh-pages
       - git push origin gh-pages
 
       # switch back to branch
