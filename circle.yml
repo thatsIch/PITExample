@@ -1,10 +1,5 @@
 # general build-related configurations that are not related to a specific phase,
 general:
-#  artifacts:
-#    - "build/reports"
-#    - "CHANGELOG.md"
-#    - "build/libs"
-
   branches:
     ignore:
       - gh-pages # list of branches to ignore
@@ -23,7 +18,8 @@ dependencies:
     - lscpu
 
     # required to start first for it to compile
-    # start gradle daemon
+    # maybe replace with better script or so
+    # or write own task
     - ./gradlew -b changelog.gradle generateChangelog
 
   cache_directories:

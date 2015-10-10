@@ -143,7 +143,6 @@ github {
     tagName = "${project.version}"
     targetCommitish = currentBranch
     name = "v${project.version}"
-    body = new File('CHANGELOG.md').getText('UTF-8')
     body = this.changeLog
     prerelease = this.isPreRelease()
     assets = [

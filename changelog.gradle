@@ -54,18 +54,157 @@ changelog {
             input = input.minus('[ci skip] ')
 
             "* $input"
-        }
-        else if (input.empty) {
+        } else if (input.empty) {
             input
-        }
-        else if (input.contains('---')) {
+        } else if (input.contains('---')) {
             input
-        }
-        else if (input == "Unreleased") {
+        } else if (input == "Unreleased") {
             input
-        }
-        else {
+        } else {
             "* $input"
         }
     }
+}
+
+private String getTags() {
+    def outStream = new ByteArrayOutputStream()
+    String tags = ""
+
+    try {
+        exec {
+            executable = "git"
+            args = ["tag"]
+            standardOutput = outStream
+        }
+
+        tags = outStream.toString().trim()
+    }
+    catch (e) {
+        logger.quiet "Error while generating tags: $e"
+    }
+
+    return tags
+}
+
+private String getChangelog(final String fromTag, final String toTag) {
+    def outStream = new ByteArrayOutputStream()
+    String changelog = ""
+
+    try {
+        exec {
+            executable = "git"
+            args = ["log", "--pretty='%s (%an)'", "$fromTag..$toTag"]
+            standardOutput = outStream
+        }
+
+        changelog = outStream.toString().trim()
+    }
+    catch (e) {
+        logger.quiet "Error while generating theChangelog: $e"
+    }
+
+    return changelog
+}
+
+private String formatChangelog(String changelog) {
+    final String[] split = changelog.split("\n")
+
+    final StringBuilder result = new StringBuilder()
+    final StringBuilder additions = new StringBuilder()
+    final StringBuilder fixes = new StringBuilder()
+    final StringBuilder changes = new StringBuilder()
+    final StringBuilder removals = new StringBuilder()
+    final StringBuilder misc = new StringBuilder()
+
+    for (String s : split) {
+        if (s.length() == 0) continue
+        String temp = "\t" + s + "\r\n"
+
+        switch (s.charAt(0)) {
+            case '+':
+                additions.insert(0, temp)
+                break
+
+            case '=':
+                fixes.insert(0, temp)
+                break
+
+            case '~':
+                changes.insert(0, temp)
+                break
+
+            case '-':
+                removals.insert(0, temp)
+                break
+
+            default:
+                misc.insert(0, temp)
+                break
+        }
+    }
+
+    if (additions.length() > 0) {
+        additions.insert(0, "Additions:\r\n")
+        result.append(additions)
+    }
+    if (fixes.length() > 0) {
+        fixes.insert(0, "\r\nFixes:\r\n")
+        result.append(fixes)
+    }
+    if (changes.length() > 0) {
+        changes.insert(0, "\r\nChanges:\r\n")
+        result.append(changes)
+    }
+    if (removals.length() > 0) {
+        removals.insert(0, "\r\nRemovals:\r\n")
+        result.append(removals)
+    }
+    if (misc.length() > 0) {
+        misc.insert(0, "\r\nMisc:\r\n")
+        result.append(misc)
+    }
+
+    return result.toString()
+}
+
+private String htmlFormat = formatChangelogToHTML()
+private String mdFormat = formatChangelogToMD()
+
+/**
+ * Fetches tags to generate sections from tag to tag starting from no tag till first tag and so on till the HEAD
+ */
+task generateHTMLChangelog(group: 'changelog', description: 'generates a HTML representation of the changelog.') << {
+    private String tags = tags;
+    private String[] splitTags = tags.split("\n")
+
+    logger.quiet "The last changelog:\n\n$log"
+}
+
+task generateMDChangelog(group: 'changelog', description: 'generates a MD representation of the changelog.') << {
+    generateMDChangelog()
+}
+
+private generateMDChangelog() {
+    private final String tags = this.getTags();
+    private final String[] splitTags = tags.split("\n")
+
+    private final StringBuilder newest = new StringBuilder()
+    private final String header = "$project.name - Changelog"
+    private final int headerLength = header.length()
+    private final String headerLine = this.generateHeaderLine(headerLength)
+    newest.append("$project.name - Changelog")
+    newest.appeng(headerLine)
+    newest.append('\n')
+
+    logger.quiet "The last changelog:\n\n$log"
+}
+
+private String generateHeaderLine(final int length) {
+    private final StringBuilder tempHeaderLine = new StringBuilder(length)
+    for(int i = 0; i < length; i++) {
+        tempHeaderLine.append('=')
+    }
+    private final String headerLine = tempHeaderLine.toString()
+
+    return headerLine
 }
