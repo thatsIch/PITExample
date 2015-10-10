@@ -31,7 +31,7 @@ changelog {
     // The output formats that should be generated.
     // Default value: ['markdown']
     // Possible values: 'html', 'markdown'.
-    formats = ['markdown', 'html']
+    formats = ['html', 'markdown']
 
     // The Git "pretty" changelog commit format.
     // Default value: %ad%x09%s (%an), which produces:
@@ -52,17 +52,23 @@ changelog {
         String input = it as String
         if (input.contains('[ci skip] ')) {
             input = input.minus('[ci skip] ')
-
-            "* $input"
-        } else if (input.empty) {
-            input
-        } else if (input.contains('---')) {
-            input
-        } else if (input == "Unreleased") {
-            input
-        } else {
-            "* $input"
         }
+
+        input + "  "
+
+//        if (input.contains('[ci skip] ')) {
+//            input = input.minus('[ci skip] ')
+//
+//            "* $input"
+//        } else if (input.empty) {
+//            input
+//        } else if (input.contains('---')) {
+//            input
+//        } else if (input == "Unreleased") {
+//            input
+//        } else {
+//            "* $input"
+//        }
     }
 }
 
