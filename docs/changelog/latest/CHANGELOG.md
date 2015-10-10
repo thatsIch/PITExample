@@ -3,6 +3,7 @@ PITExample - Changelog
 
 Unreleased  
 ----------  
+Raise threshold for coverage (thatsIch)  
 Using space space hack for MD (thatsIch)  
 Remove modifiers (thatsIch)  
 Starting to add self customized changelog (thatsIch)  
