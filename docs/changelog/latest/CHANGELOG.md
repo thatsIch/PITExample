@@ -3,6 +3,8 @@ PITExample - Changelog
 
 Unreleased  
 ----------  
+Resetting on wrong position (thatsIch)  
+Fix missing reset on gh-pages (thatsIch)  
 Raise threshold for coverage (thatsIch)  
 Using space space hack for MD (thatsIch)  
 Remove modifiers (thatsIch)  
