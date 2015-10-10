@@ -73,7 +73,7 @@ test:
     - cp -r build/reports/jacoco/test/html/. build/reports/jacoco/test/html/* $CIRCLE_ARTIFACTS/coverage
 
     - mkdir -p $CIRCLE_ARTIFACTS/mutation
-    - cp -r build/reports/pitest/*/. build/reports/pitest/*/* $CIRCLE_ARTIFACTS/mutation
+    - cp -r build/reports/pitest/. build/reports/pitest/* $CIRCLE_ARTIFACTS/mutation
 
 # deploying your code to your web servers
 # Only executed if all tasks are successful
@@ -102,7 +102,7 @@ deployment:
 
       # publish mutation reports
       - mkdir -p pitest/stable
-      - mv build/reports/pitest/*/ pitest/stable/
+      - mv build/reports/pitest/ pitest/stable/
       - git add pitest/stable/ --force --ignore-removal
       - git commit -m "[ci skip] Generate mutation"
 
@@ -150,7 +150,7 @@ deployment:
 
       # publish mutation reports
       - mkdir -p pitest/pre
-      - cp -a build/reports/pitest/*/* pitest/pre/
+      - cp -a build/reports/pitest/* pitest/pre/
       - git add .
       - git commit -m "[ci skip] Generate mutation"
 
@@ -195,7 +195,7 @@ deployment:
 
       # publish mutation reports
       - mkdir -p docs/pitest/latest
-      - cp -r build/reports/pitest/*/. build/reports/pitest/*/* docs/pitest/latest/ --verbose
+      - cp -r build/reports/pitest/. build/reports/pitest/* docs/pitest/latest/ --verbose
       - git add --verbose -A docs
       - git commit --verbose --verbose -m "[ci skip] Generate Mutation Report"
 

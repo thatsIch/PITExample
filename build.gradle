@@ -82,25 +82,30 @@ jacocoTestReport {
     }
 }
 
+double getThresholdOfBranch(final String branch) {
+    return this.getThresholdOfBranchInPercent(branch) / 100.0;
+}
+
+int getThresholdOfBranchInPercent(final String branch) {
+    switch (branch) {
+        case "develop":
+            return 50
+
+        case "release":
+            return 75
+
+        case "production":
+            return 100
+
+        default:
+            return 0
+    }
+}
+
 jacocoCoverage {
     // Enforce minimum code coverage of 50% for every Java file.
     // Value differs from branch. Release will have a much higher threshold than develop
-    switch( currentBranch) {
-        case "develop":
-            fileThreshold 0.5
-            break;
-
-        case "release":
-            fileThreshold 0.75
-            break;
-
-        case "production":
-            fileThreshold 1
-            break;
-
-        default:
-            break;
-    }
+    fileThreshold this.getThresholdOfBranch(currentBranch)
 }
 
 dependencies {
@@ -110,10 +115,13 @@ dependencies {
 pitest {
     pitestVersion = '1.1.7'
     reportDir = "build/reports/pitest"
+    timestampedReports = false
     targetClasses = ['de.thatsich.*']
     threads = 32
     outputFormats = ['HTML']
     mutators = ['ALL']
+    coverageThreshold = this.getThresholdOfBranchInPercent(currentBranch)
+    mutationThreshold = 80
 }
 
 bintray {
