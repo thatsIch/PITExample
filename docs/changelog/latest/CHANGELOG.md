@@ -3,6 +3,7 @@ PITExample - Changelog
 
 Unreleased  
 ----------  
+Use branch based pitest fail (thatsIch)  
 Synchronize with remote tags (thatsIch)  
 Artifacts not copied properly (thatsIch)  
 Resetting on wrong position (thatsIch)  
