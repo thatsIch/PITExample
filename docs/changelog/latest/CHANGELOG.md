@@ -3,6 +3,7 @@ PITExample - Changelog
 
 Unreleased  
 ----------  
+Synchronize with remote tags (thatsIch)  
 Artifacts not copied properly (thatsIch)  
 Resetting on wrong position (thatsIch)  
 Fix missing reset on gh-pages (thatsIch)  
