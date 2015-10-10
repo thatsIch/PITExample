@@ -53,6 +53,10 @@ test:
     - git fetch origin
     - git reset --hard origin/gh-pages
 
+    # remove all left over tags which may be in the system
+    - git tag -l | xargs git tag -d
+    - git fetch
+
     # copy all artifacts to $CIRCLE_ARTIFACTS
     - cp -r CHANGELOG.html $CIRCLE_ARTIFACTS
 
