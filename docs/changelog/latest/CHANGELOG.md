@@ -3,6 +3,7 @@ PITExample - Changelog
 
 Unreleased  
 ----------  
+Artifacts not copied properly (thatsIch)  
 Resetting on wrong position (thatsIch)  
 Fix missing reset on gh-pages (thatsIch)  
 Raise threshold for coverage (thatsIch)  
