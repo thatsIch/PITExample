@@ -2,7 +2,7 @@ plugins {
     // prints pretty changelogs from git
     // see homepage: https://git-scm.com/
     // see plugin: https://github.com/selesse/gradle-git-changelog
-    id "com.selesse.git.changelog" version "0.1.2"
+    id "com.selesse.git.changelog" version "0.2.0"
 }
 
 changelog {
@@ -38,6 +38,20 @@ changelog {
     // Thu May 7 20:10:33 2015 -0400    Initial commit (Alex Selesse)
     commitFormat = '%s (%an)'
 
+    // Specifies a commit format for Markdown.
+    // Default value: '* %s (%an)', which produces:
+    // * Initial commit (Alex Selesse)
+    markdown {
+        commitFormat = '* %s (%an)'
+    }
+
+    // Specifies a commit format for the HTML template.
+    // Default value: see commitFormat
+    html {
+        commitFormat = '%s (%an)'
+    }
+
+
     // A closure that returns 'true' if the line should be included in the changelog.
     // Default value: accept everything, { true }
     includeLines = {
@@ -54,21 +68,7 @@ changelog {
             input = input.minus('[ci skip] ')
         }
 
-        input + "  "
-
-//        if (input.contains('[ci skip] ')) {
-//            input = input.minus('[ci skip] ')
-//
-//            "* $input"
-//        } else if (input.empty) {
-//            input
-//        } else if (input.contains('---')) {
-//            input
-//        } else if (input == "Unreleased") {
-//            input
-//        } else {
-//            "* $input"
-//        }
+        input
     }
 }
 
