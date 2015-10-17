@@ -15,6 +15,30 @@ plugins {
     // see plugin: https://docs.gradle.org/current/userguide/jacoco_plugin.html
     id "jacoco"
 
+    // builds a dashboard for all reports
+    // see plugin: https://docs.gradle.org/current/userguide/buildDashboard_plugin.html
+    id 'build-dashboard'
+
+    // The JDepend plugin performs quality checks on your project's source files using JDepend and generates reports from these checks.
+    // see homepage: http://clarkware.com/software/JDepend.html
+    // see plugin: https://docs.gradle.org/current/userguide/jdepend_plugin.htmlgra
+    id 'jdepend'
+
+    // The FindBugs plugin performs quality checks on your project's Java source files using FindBugs and generates reports from these checks.
+    // see homepage: http://findbugs.sourceforge.net/
+    // see plugin: https://docs.gradle.org/current/userguide/findbugs_plugin.html
+    id 'findbugs'
+
+    // The PMD plugin performs quality checks on your project's Java source files using PMD and generates reports from these checks.
+    // see homepage: http://pmd.sourceforge.net/
+    // see plugin: https://docs.gradle.org/current/userguide/pmd_plugin.html
+    id 'pmd'
+
+    // The Checkstyle plugin performs quality checks on your project's Java source files using Checkstyle and generates reports from these checks.
+    // see homepage: http://checkstyle.sourceforge.net/index.html
+    // see plugin: https://docs.gradle.org/current/userguide/checkstyle_plugin.html
+    id 'checkstyle'
+
     // running mutating coverage tests
     // see homepage: http://pitest.org/
     // see plugin: http://gradle-pitest-plugin.solidsoft.info/
@@ -38,6 +62,10 @@ plugins {
     // evaluates jacoco coverage
     // see plugin: https://github.com/palantir/gradle-jacoco-coverage
     id "com.palantir.jacoco-coverage" version "0.3.0"
+
+    // he Gradle announce plugin allows you to send custom announcements during a build.
+    // see plugin: https://docs.gradle.org/current/userguide/announce_plugin.html
+    id 'announce'
 }
 
 // import ext.projectversion
@@ -190,3 +218,38 @@ def isPreRelease() {
 task printIsPreRelease(group: 'Debug', description: 'Returns if the current version is a pre-release.') << {
     println this.isPreRelease
 }
+
+jdependMain {
+    reports {
+        xml.enabled true
+        text.enabled false
+    }
+}
+
+task jdependReport(dependsOn: jdependMain, group: 'verification', description: 'Generates a HTML report after executing jdepend checks.') << {
+    ant.xslt(
+            in: "$reporting.baseDir/jdepend/main.xml",
+            style: "$rootDir/gradle/config/jdepend/jdepend-report.xslt",
+            out:"$reporting.baseDir/jdepend/main.html")
+}
+
+check {
+    dependsOn += ['jdependReport']
+}
+
+build.doLast {
+    announce.announce("build completed!", "local")
+}
+
+checkstyle {
+    toolVersion = "6.11.2"
+    configFile = file("${project.projectDir}/gradle/config/checkstyle/checkstyle.xml")
+}
+
+task checkstyleHtml << {
+    ant.xslt(in: checkstyleMain.reports.xml.destination,
+            style: file("${project.projectDir}/gradle/config/checkstyle/checkstyle-noframes-sorted.xsl"),
+            out: new File(checkstyleMain.reports.xml.destination.parent, 'main.html'))
+}
+
+checkstyleMain.finalizedBy checkstyleHtml
