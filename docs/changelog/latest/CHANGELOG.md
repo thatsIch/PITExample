@@ -3,6 +3,7 @@ PITExample - Changelog
 
 Unreleased
 ----------
+* Use several unconfigured coding standard libraries (thatsIch)
 * Update changelog plugin (thatsIch)
 * Use branch based pitest fail (thatsIch)
 * Synchronize with remote tags (thatsIch)
