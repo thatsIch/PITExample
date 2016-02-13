@@ -1,6 +1,7 @@
 PITExample - Changelog
 ======================
 
+* Use all instead of bin of gradle (thatsIch)
 * Added new metadata collection feature of Circle IO (thatsIch)
 * Missed Javadocs being copied (thatsIch)
 * Update Gradle from 2.7 to 2.11 (thatsIch)
