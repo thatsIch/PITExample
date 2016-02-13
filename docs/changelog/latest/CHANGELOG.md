@@ -1,6 +1,7 @@
 PITExample - Changelog
 ======================
 
+* Missed Javadocs being copied (thatsIch)
 * Update Gradle from 2.7 to 2.11 (thatsIch)
 * Use several unconfigured coding standard libraries (thatsIch)
 * Update changelog plugin (thatsIch)
