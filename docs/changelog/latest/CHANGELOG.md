@@ -1,6 +1,7 @@
 PITExample - Changelog
 ======================
 
+* Fixes typo from he to The (thatsIch)
 * Use all instead of bin of gradle (thatsIch)
 * Added new metadata collection feature of Circle IO (thatsIch)
 * Missed Javadocs being copied (thatsIch)
@@ -10,7 +11,3 @@ PITExample - Changelog
 * Use branch based pitest fail (thatsIch)
 * Synchronize with remote tags (thatsIch)
 * Artifacts not copied properly (thatsIch)
-* Resetting on wrong position (thatsIch)
-* Fix missing reset on gh-pages (thatsIch)
-* Raise threshold for coverage (thatsIch)
-* Using space space hack for MD (thatsIch)
