@@ -63,7 +63,7 @@ plugins {
     // see plugin: https://github.com/palantir/gradle-jacoco-coverage
     id "com.palantir.jacoco-coverage" version "0.3.0"
 
-    // he Gradle announce plugin allows you to send custom announcements during a build.
+    // The Gradle announce plugin allows you to send custom announcements during a build.
     // see plugin: https://docs.gradle.org/current/userguide/announce_plugin.html
     id 'announce'
 }
